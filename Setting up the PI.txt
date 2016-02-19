@@ -1,0 +1,24 @@
+﻿
+1. Install latest raspbain
+2. Install node.js
+
+wget https://nodejs.org/dist/v4.3.1/node-v4.3.1-linux-armv7l.tar.xz (check nodejs.org for latest)
+tar -xvf node-v4.3.1-linux-armv7l.tar.xz
+cd node-v4.3.1-linux-armv7l
+
+3. Install ds18B20 temperature sensor devices:
+
+sudo nano /boot/config.txt
+add:
+dtoverlay=w1-gpio
+
+restart PI
+
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
+ls /sys/bus/w1/devices 
+(you should see the id of the probe)
+
+4. Install firefox (iceweasal)
+
+sudo apt-get iceweasal
