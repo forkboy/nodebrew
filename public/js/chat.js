@@ -15,18 +15,13 @@
 	connection.onmessage = function (message) {
 		// try to decode json (I assume that each message from server is json)
 		try {
-			var json = JSON.parse(message.data);
+            var json = JSON.parse(message.data);
+            console.log(json);
 		} catch (e) {
 			console.log('This doesn\'t look like a valid JSON: ', message.data);
 			return;
 		}
         // handle incoming message
 	};
-
-	
-	setInterval(function () {
-		console.log("sending message");
-		connection.send(JSON.stringify({message: "hello world!"}));
-	}, 1000);
 
 });
