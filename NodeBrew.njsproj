@@ -36,6 +36,7 @@
     <Compile Include="app.js" />
     <Compile Include="lib\element.js" />
     <Compile Include="lib\events.js" />
+    <Compile Include="lib\messageRelay.js" />
     <Compile Include="lib\pump.js" />
     <Compile Include="lib\steps.js" />
     <Compile Include="lib\temperature.js" />
@@ -44,7 +45,10 @@
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
+    <Compile Include="public\js\app.js" />
     <Compile Include="public\js\chat.js" />
+    <Compile Include="public\js\comms.js" />
+    <Compile Include="public\js\ui.js" />
     <Compile Include="Tests\PumpTests.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
@@ -58,12 +62,14 @@
       <TestFramework>Mocha</TestFramework>
     </Compile>
     <Content Include="package.json" />
+    <Content Include="public\css\site.css" />
     <Content Include="public\index.html" />
     <Content Include="README.md" />
     <Content Include="Setting up the PI.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\" />
+    <Folder Include="public\css\" />
     <Folder Include="Tests\" />
     <Folder Include="public\" />
     <Folder Include="public\js\" />

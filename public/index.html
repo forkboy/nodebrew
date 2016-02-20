@@ -4,11 +4,39 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link href="css/site.css" rel="stylesheet" />
 </head>
-<body>
-    hello kitty
+<body ng-app="nodebrew">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/chat.js"></script>
+    <div ng-controller="run">
+        <div id="header" class="header">
+            <div class="kettleTemp">{{kettleTemp}}</div>
+        </div>
+        <div id="body" class="body">
+            <div class="bodyContent">
+                <div class="mashSchedule">
+                    Mash Schedule
+                </div>
+                <div class="additionsSchedule">
+                    Additions Schedule
+                </div>
+                <div class="graph">
+                    Graph
+                </div>
+            </div>
+        </div>
+        <div id="rhs" class="rhs">
+            <div ng-repeat="step in steps" class="steps">
+                <div ng-class="{current:step.name == steps.currentStep}">
+                    <span>{{step.type}}</span>
+                    <span>{{step.name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/comms.js"></script>
 </body>
 </html>

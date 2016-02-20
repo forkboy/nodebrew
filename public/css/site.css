@@ -1,0 +1,57 @@
+﻿div {
+    padding: 0px;
+}
+body {
+    width: 800px;
+    height: 480px;
+}
+
+.header {
+    width: 800px;
+    height: 100px;
+    background-color: cornflowerblue;
+}
+
+.body {
+    width: 640px;
+    height: 380px;
+    float: left;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    background-color: white;
+}
+
+.rhs {
+    width: 160px;
+    height: 380px;
+    background-color: gainsboro;
+    float:right;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.kettleTemp {
+    width: 160px;
+    height: 100px;
+    text-align: center;
+    vertical-align: central;
+    font-size: 30px;
+    background-color: forestgreen;
+    float: right;
+}
+
+.steps {
+   
+}
+
+.mashSchedule, .additionsSchedule, .graph {
+    width: 640px;
+    height: 100%;
+    background-color: coral;
+    float:right;
+}
+
+.bodyContent {
+    width: 1920px;
+    height: 100%;
+}
