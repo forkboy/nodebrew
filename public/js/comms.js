@@ -34,6 +34,8 @@
         }
 
         this.send = function (request) {
+            console.log("sending message to server");
+            console.log(request);
             connection.send(JSON.stringify(request));
         }
     }]);

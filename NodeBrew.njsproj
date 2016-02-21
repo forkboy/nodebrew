@@ -46,9 +46,12 @@
       <TestFramework>Mocha</TestFramework>
     </Compile>
     <Compile Include="public\js\app.js" />
-    <Compile Include="public\js\chat.js" />
     <Compile Include="public\js\comms.js" />
     <Compile Include="public\js\ui.js" />
+    <Compile Include="Tests\ElementTests.js">
+      <SubType>Code</SubType>
+      <TestFramework>Mocha</TestFramework>
+    </Compile>
     <Compile Include="Tests\PumpTests.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
@@ -63,6 +66,14 @@
     </Compile>
     <Content Include="package.json" />
     <Content Include="public\css\site.css" />
+    <Content Include="public\font\css\font-awesome.css" />
+    <Content Include="public\font\css\font-awesome.min.css" />
+    <Content Include="public\font\fonts\fontawesome-webfont.eot" />
+    <Content Include="public\font\fonts\fontawesome-webfont.svg" />
+    <Content Include="public\font\fonts\fontawesome-webfont.ttf" />
+    <Content Include="public\font\fonts\fontawesome-webfont.woff" />
+    <Content Include="public\font\fonts\fontawesome-webfont.woff2" />
+    <Content Include="public\font\fonts\FontAwesome.otf" />
     <Content Include="public\index.html" />
     <Content Include="README.md" />
     <Content Include="Setting up the PI.txt" />
@@ -70,6 +81,10 @@
   <ItemGroup>
     <Folder Include="lib\" />
     <Folder Include="public\css\" />
+    <Folder Include="public\font\" />
+    <Folder Include="public\font\css\" />
+    <Folder Include="public\font\fonts\" />
+    <Folder Include="public\img\" />
     <Folder Include="Tests\" />
     <Folder Include="public\" />
     <Folder Include="public\js\" />

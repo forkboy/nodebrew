@@ -4,54 +4,181 @@
 body {
     width: 800px;
     height: 480px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
 }
 
 .header {
     width: 800px;
     height: 100px;
-    background-color: cornflowerblue;
 }
 
 .body {
-    width: 640px;
+    width: 600px;
     height: 380px;
     float: left;
     overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
     background-color: white;
 }
 
 .rhs {
-    width: 160px;
-    height: 380px;
-    background-color: gainsboro;
+    width: 200px;
+    height: 100%;
     float:right;
-    overflow-y:scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow-y:hidden;
 }
 
-.kettleTemp {
-    width: 160px;
-    height: 100px;
+.header .block {
+    width: 180px;
+    height: 80px;
+    float: right;
+    color: white;
+    margin: 10px;
+}
+
+.blockBody {
+    font-size: 35px;
+    width: 100%;
+    height: 50px;
     text-align: center;
-    vertical-align: central;
-    font-size: 30px;
-    background-color: forestgreen;
+    vertical-align: middle;
+    line-height: 50px;       /* the same as your div height */
     float: right;
 }
 
+.blockLabel {
+    background:rgba(0,0,0,.1) ;
+    font-size: 12px;
+    width: 40%;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;       /* the same as your div height */
+    float: left;
+}
+
+.green {
+    background: #43B5AD 
+}
+
+.blue {
+    background: #578EBE 
+}
+
+.yellow {
+    background: #DEB948
+}
+
+.purple {
+    background: #8674A6
+}
+
+.heat .off {
+    color: maroon;
+}
+
+.heat .on {
+    color: white;
+}
+
+.pump .off {
+    color: maroon;
+}
+
+.pump .on {
+    color: white;
+}
+
+.heat span>span {
+    font-size: 20px;
+    vertical-align: central;
+    line-height: 35px;
+}
+
 .steps {
-   
+}
+
+.step {
+    height: 20px;
+    margin: 10px;
+    background-color: #eeeeee;
+    line-height: 20px;
+    padding: 15px;
+    text-align: center;
+}
+
+.currentStep {
+    /*background-color: #43B5AD;*/
+    background-color: #BBBBBB;
+    text-align:left;
+    height: 100px;
+}
+
+.stepLHS {
+    font-size: 22px;
+    text-align: center;
+    vertical-align: top;
+    width: 30%;
+    height: 80px;
+    float:left;
+}
+
+.stepBody
+{
+    font-size: 22px;
+    width: 70%;
+    height: 100%;
+    float: left;
 }
 
 .mashSchedule, .additionsSchedule, .graph {
     width: 640px;
     height: 100%;
-    background-color: coral;
     float:right;
 }
 
 .bodyContent {
     width: 1920px;
     height: 100%;
+}
+
+
+.confirmManual{
+    width: 100%;
+    height: 60px;
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #578EBE;
+    border-color: #578EBE;
+    border: 1px solid #a7a9aa;
+    font-size: 18px;
+    color: white;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #a7a9aa;
+    -webkit-border-radius: 0px !important;
+    border-radius: 0px !important;
+    color: #ffffff;
+    background-color: #a7a9aa;
+    border-color: #a7a9aa;
+    background-image: none;
+    filter: none;
+    text-shadow: none;
+}
+
+
+.btn-primary {
+  background-color: #578EBE;
+  border-color: #578EBE;
 }

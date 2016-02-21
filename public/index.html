@@ -6,12 +6,28 @@
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link href="css/site.css" rel="stylesheet" />
+    <link href="font/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body ng-app="nodebrew">
 
     <div ng-controller="run">
         <div id="header" class="header">
-            <div class="kettleTemp">{{kettleTemp}}</div>
+            <div class="block blue temperature">
+                <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
+                <div class="blockLabel"><span>Current</span></div>
+            </div>
+            <div class="block green target">
+                <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
+                <div class="blockLabel"><span>Target</span></div>
+            </div>
+            <div class="block yellow pump">
+                <div class="blockBody"><span ng-class="{on: kettlePump == true, off: kettlePump == false}" class="fa fa-random"></span></div>
+                <div class="blockLabel"><span>Pump</span></div>
+            </div>
+            <div class="block purple heat">
+                <div class="blockBody"><span ng-class="{on: kettleElement > 0, off: kettleElement == 0}" class="fa fa-fire"><span>{{kettleElement}}%</span></span></div>
+                <div class="blockLabel"><span>Heat</span></div>
+            </div>
         </div>
         <div id="body" class="body">
             <div class="bodyContent">
@@ -27,11 +43,40 @@
             </div>
         </div>
         <div id="rhs" class="rhs">
-            <div ng-repeat="step in steps" class="steps">
-                <div ng-class="{current:step.name == steps.currentStep}">
-                    <span>{{step.type}}</span>
+            <div class="step minus2">
+                {{stepsViewport[0].name}}
+            </div>
+            <div class="step minus1">
+                {{stepsViewport[1].name}}
+            </div>
+            <div class="step currentStep">
+                <div ng-show="stepsViewport[2].type == 'Manual'">
+                    <span>{{stepsViewport[2].name}}</span><br />
+                    <hr/>
+                    <input type="button" id="confirmManual" class="confirmManual" value="OK" ng-click="confirmManualStep()" />
+                </div>
+                <div ng-show="step.type == 'Ramp'">
                     <span>{{step.name}}</span>
                 </div>
+                <div ng-show="step.type == 'Hold'">
+                    <span>{{step.name}}</span>
+                </div>
+                <div ng-show="step.type == 'Boil'">
+                    <span>{{step.name}}</span>
+                </div>
+                <div ng-show="step.type == 'Chill'">
+                    <span>{{step.name}}</span>
+                </div>
+                <div ng-show="step.type == 'Settle'">
+                    <span>{{step.name}}</span>
+                </div>
+            </div>
+            <div class="step plus1">
+                {{stepsViewport[3].name}}
+
+            </div>
+            <div class="step plus2">
+                {{stepsViewport[4].name}}
             </div>
         </div>
     </div>
