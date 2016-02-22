@@ -17,7 +17,7 @@
                 <div class="blockLabel"><span>Current</span></div>
             </div>
             <div class="block green target">
-                <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
+                <div class="blockBody"><span>{{kettleTarget}}</span> <span>C</span></div>
                 <div class="blockLabel"><span>Target</span></div>
             </div>
             <div class="block yellow pump">
@@ -50,25 +50,28 @@
                 {{stepsViewport[1].name}}
             </div>
             <div class="step currentStep">
-                <div ng-show="stepsViewport[2].type == 'Manual'">
-                    <span>{{stepsViewport[2].name}}</span><br />
+                <div>
+                    <span>{{currentStep.name}}</span><br />
                     <hr/>
-                    <input type="button" id="confirmManual" class="confirmManual" value="OK" ng-click="confirmManualStep()" />
-                </div>
-                <div ng-show="step.type == 'Ramp'">
-                    <span>{{step.name}}</span>
-                </div>
-                <div ng-show="step.type == 'Hold'">
-                    <span>{{step.name}}</span>
-                </div>
-                <div ng-show="step.type == 'Boil'">
-                    <span>{{step.name}}</span>
-                </div>
-                <div ng-show="step.type == 'Chill'">
-                    <span>{{step.name}}</span>
-                </div>
-                <div ng-show="step.type == 'Settle'">
-                    <span>{{step.name}}</span>
+                    <div ng-show="currentStep.type == 'Manual'">
+                        <input type="button" id="confirmManual" class="confirmManual" value="OK" ng-click="confirmManualStep()" />
+                    </div>
+                    <div ng-show="currentStep.type == 'Ramp'">
+                        <span>{{kettleTarget}}</span>
+                    </div>
+                    <div ng-show="currentStep.type == 'Hold'">
+                        <span>{{currentStep.duration}} minutes</span><br/><br />
+                        <span>{{currentStepTimer | date: 'mm:ss' }}</span>
+                    </div>
+                    <div ng-show="currentStep.type == 'Boil'">
+                        <span>{{currentStep.name}}</span>
+                    </div>
+                    <div ng-show="currentStep.type == 'Chill'">
+                        <span>{{currentStep.name}}</span>
+                    </div>
+                    <div ng-show="currentStep.type == 'Settle'">
+                        <span>{{currentStep.name}}</span>
+                    </div>
                 </div>
             </div>
             <div class="step plus1">

@@ -1,5 +1,4 @@
 ﻿var assert   = require('assert'),
-    Events   = require('../lib/events.js'),
     Workflow = require('../lib/workflow.js'),
     Time     = require("../lib/time.js"),
     Postal   = require("postal");

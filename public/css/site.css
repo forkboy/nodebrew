@@ -74,19 +74,19 @@ body {
 }
 
 .heat .off {
-    color: maroon;
+    color: white;
 }
 
 .heat .on {
-    color: white;
-}
-
-.pump .off {
     color: maroon;
 }
 
-.pump .on {
+.pump .off {
     color: white;
+}
+
+.pump .on {
+    color: maroon;
 }
 
 .heat span>span {
@@ -110,7 +110,7 @@ body {
 .currentStep {
     /*background-color: #43B5AD;*/
     background-color: #BBBBBB;
-    text-align:left;
+    text-align:center;
     height: 100px;
 }
 

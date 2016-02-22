@@ -1,6 +1,5 @@
 ﻿var assert   = require('assert');
 var Steps    = require('../lib/steps.js');
-var Events   = require("../lib/events.js");
 var Workflow = require("../lib/workflow.js");
 var Time     = require("../lib/time.js");
 var Postal   = require("postal");
@@ -65,6 +64,32 @@ describe('Temp Ramp Step;', function () {
         var step = new Steps.TempRamp("Test", 64.5);
         
         assert.equal(step.targetTemp, 64.5);
+    });
+    
+    it('Given I am initialised, when I am Started, then I should set the kettle targetTemperature', function () {
+        var step = new Steps.TempRamp("Test", 50.1);
+        
+        var messageBus = Postal.channel();
+        
+        var spy = sinon.spy(step.messageBus, "publish");
+        
+        step.Start();
+       
+        assert.equal(spy.args[0][0], "SetKettleTarget");
+        assert.equal(spy.args[0][1].targetTemp, 50.1);
+    });
+    
+    it('Given I am initialised, when I am Started, then I should set the wort pump to ON', function () {
+        var step = new Steps.TempRamp("Test", 50.1);
+        
+        var messageBus = Postal.channel();
+        
+        var spy = sinon.spy(step.messageBus, "publish");
+        
+        step.Start();
+        
+        assert.equal(spy.args[1][0], "SetWortPumpState");
+        assert.equal(spy.args[1][1].state, 1);
     });
 
     it('Given I am Started, when a Tick event is raised and wort temperature meets or exceeds my target temp, I should raise MoveToNextStep event ', function () {

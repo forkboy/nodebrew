@@ -1,11 +1,13 @@
 ﻿
-var WebSocketServer = require('websocket').server;
-var express = require('express');
+var WebSocketServer  = require('websocket').server;
+var express          = require('express');
 var TemperatureProbe = require('./lib/temperature.js');
-var Pump = require('./lib/pump.js');
-var Workflow = require('./lib/workflow.js');
-var Postal = require("postal");
-var MessageRelay = require('./lib/messageRelay.js');
+var Pump             = require('./lib/pump.js');
+var Workflow         = require('./lib/workflow.js');
+var MessageRelay     = require('./lib/messageRelay.js');
+var Simulator        = require('./lib/simulator.js');
+var Postal           = require("postal");
+var sinon            = require('sinon');
 
 // start the web server
 var app = express();
@@ -19,6 +21,13 @@ relay.start();
 
 // start the workflow
 var workflow = new Workflow.Workflow();
+
+// if we're in simulation mode, stub out all the hardware (thanks sinon)
+if (process.argv[2] == "simulate") {
+    var sim = new Simulator(workflow);
+    sim.initialise();
+}
+    
 workflow.start();
 
 

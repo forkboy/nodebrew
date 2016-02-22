@@ -1,17 +1,17 @@
 ﻿
 app.controller('run', ['$scope', 'comms', function ($scope, comms) {
-        $scope.kettleTemp    = 0;
-        $scope.kettleTarget  = 0;
-        $scope.kettleElement = 0;
-        $scope.kettlePump    = 0;
-        $scope.currentStep = "";
-        $scope.stepsViewport = [,,,,];
-        $scope.steps         = [{ name: 'a', type: 'a' }];
+        $scope.kettleTemp      = 0;
+        $scope.kettleTarget    = 0;
+        $scope.kettleElement   = 0;
+        $scope.kettlePump      = 0;
+        $scope.currentStepName = "";
+        $scope.currentStep     = null;
+        $scope.stepsViewport   = [,,,,];
+        $scope.steps           = [{ name: 'a', type: 'a' }];
         
         this.start = function () {
             console.log('Starting Comms...')
             comms.initialise(this.commsReady);
-            
         }
         
         this.commsReady = function () {
@@ -24,14 +24,15 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
         };
 
         $scope.$on("Tick", function (event, data) {
-            $scope.kettleTemp = data.KettleTemperature;
-            $scope.kettleTarget = data.KettleTarget;
-            $scope.kettleElement = data.KettleElement;
-            $scope.kettlePump = data.KettlePump;
-            $scope.currentStep = data.CurrentStep;
+            $scope.kettleTemp        = parseFloat(data.KettleTemperature).toFixed(1);
+            $scope.kettleTarget      = parseFloat(data.KettleTarget).toFixed(0);
+            $scope.kettleElement     = parseFloat(data.KettleElement * 100.0).toFixed(0);
+            $scope.kettlePump        = data.KettlePump;
+            $scope.currentStep       = data.CurrentStep;
+            $scope.currentStepTimer  = new Date(data.CurrentStep.remaining * 1000);
             
             for (var i = 0; i < $scope.steps.length; i++) {
-                if (data.CurrentStep == $scope.steps[i].name) {
+                if (data.CurrentStep.name == $scope.steps[i].name) {
                     $scope.stepsViewport[0] = i > 2 ? $scope.steps[i - 2] : undefined;
                     $scope.stepsViewport[1] = i > 1 ? $scope.steps[i - 1] : undefined;
                     $scope.stepsViewport[2] = $scope.steps[i];
