@@ -51,4 +51,67 @@ describe('Workflow Steps;', function () {
 
         assert.equal(w.getCurrentStep().name, "Add Mash Water");
     });
+    
+    it('Given I am at any step, when a MoveToPreviousStep event is raised, I should move to the previous step', function () {
+        var w = new Workflow.Workflow();
+        w.goToStep("Add Mash Water");
+        
+        var spy = sinon.spy(w, "movePrevious");
+
+        var channel = Postal.channel();
+        channel.publish("MoveToPreviousStep");
+        
+        assert.equal(w.getCurrentStep().name, "Start");
+        assert.equal(spy.calledOnce, true);
+    });
+    
+    it('Given I am at any step, when a MoveToNamedStep event is raised, I should move to the previous step', function () {
+        var w = new Workflow.Workflow();
+        w.goToStep("Add Mash Water");
+        
+        var spy = sinon.spy(w, "goToStep");
+        
+        var channel = Postal.channel();
+        channel.publish("MoveToNamedStep", { name: "Start" });
+        
+        assert.equal(spy.calledOnce, true);
+        assert.equal(w.getCurrentStep().name, "Start");
+    });
+
+    it('Given I am at any step, when a SetWortPumpState event is raised with state on, I should set the Wort pump state to on', function () {
+        var w = new Workflow.Workflow();
+        w.goToStep("Start");
+        
+        var spy = sinon.spy(w.kettlePump, "on");
+
+        var channel = Postal.channel();
+        channel.publish("SetWortPumpState", { state: "on" });
+        
+        assert.equal(spy.calledOnce, true, "pump.on() should be called");
+    });
+
+    it('Given I am at any step, when a SetWortPumpState event is raised with state off, I should set the Wort pump state to off', function () {
+        var w = new Workflow.Workflow();
+        w.goToStep("Start");
+        
+        var spy = sinon.spy(w.kettlePump, "off");
+        
+        var channel = Postal.channel();
+        channel.publish("SetWortPumpState", { state: "off" });
+        
+        assert.equal(spy.calledOnce, true, "pump.off() should be called");
+    });
+
+    it('Given I am at any step, when a SetKettleTarget event is raised with state on, I should set the Kettle element target temperature', function () {
+        var w = new Workflow.Workflow();
+        w.goToStep("Start");
+        
+        var spy = sinon.spy(w.kettleElement, "setTarget");
+        
+        var channel = Postal.channel();
+        channel.publish("SetKettleTarget", { targetTemp: 55 });
+        
+        assert.equal(spy.calledOnce, true, "pump.on() should be called");
+        assert.equal(spy.args[0][0], 55);
+    });
 });
