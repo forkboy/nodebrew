@@ -56,7 +56,7 @@ describe('Manual Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 50.1);
+        assert.equal(spy.args[0][1].target, 50.1);
     });
     
     it('Given I am initialised and a pump state is specified, when I am Started, then I should set the wort pump', function () {
@@ -82,7 +82,7 @@ describe('Manual Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 0);
+        assert.equal(spy.args[0][1].target, 0);
     });
 
     it('Given I am initialised and a pump state is not specified, when I am Started, then I should default the wort pump to off', function () {
@@ -115,7 +115,7 @@ describe('Temp Ramp Step;', function () {
     it('Given I am initialised and target temp is specified, then I should have the specified target temp', function () {
         var step = new Steps.TempRamp({ name: "Test", target: 64.5 });
         
-        assert.equal(step.targetTemp, 64.5);
+        assert.equal(step.target, 64.5);
     });
     
     it('Given I am initialised, when I am Started, then I should set the kettle targetTemperature', function () {
@@ -128,7 +128,7 @@ describe('Temp Ramp Step;', function () {
         step.Start();
        
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 50.1);
+        assert.equal(spy.args[0][1].target, 50.1);
     });
     
     it('Given I am initialised, when I am Started, then I should set the wort pump to ON', function () {
@@ -190,7 +190,7 @@ describe('Temp Hold Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 30.1);
+        assert.equal(spy.args[0][1].target, 30.1);
     });
     
     it('Given I am initialised and a pump state is specified, when I am Started, then I should set the pump state', function () {
@@ -261,7 +261,7 @@ describe('Boil Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 105);
+        assert.equal(spy.args[0][1].target, 105);
     });
     
     it('Given I am initialised, when I am Started, then I should set the pump state to off', function () {
@@ -306,7 +306,7 @@ describe('Chill Step;', function () {
     it('Given I am initialised and temperature and duration is specified, then I should have the specified temperature and duration', function () {
         var step = new Steps.Chill({ name: "Test", target: 20.5, duration: 30.1 });
         
-        assert.equal(step.targetTemp, 20.5);
+        assert.equal(step.target, 20.5);
         assert.equal(step.duration, 30.1);
     });
     
@@ -320,7 +320,7 @@ describe('Chill Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 20.5);
+        assert.equal(spy.args[0][1].target, 20.5);
     });
     
     it('Given I am initialised, when I am Started, then I should set the pump state to on', function () {
@@ -397,7 +397,7 @@ describe('Settle Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].targetTemp, 0);
+        assert.equal(spy.args[0][1].target, 0);
     });
     
     it('Given I am initialised, when I am Started, then I should set the pump state to off', function () {

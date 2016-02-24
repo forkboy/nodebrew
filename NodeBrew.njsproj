@@ -38,6 +38,7 @@
     <Compile Include="lib\element.js" />
     <Compile Include="lib\messageRelay.js" />
     <Compile Include="lib\pump.js" />
+    <Compile Include="lib\schedule.js" />
     <Compile Include="lib\simulator.js" />
     <Compile Include="lib\steps.js" />
     <Compile Include="lib\temperature.js" />
@@ -54,6 +55,10 @@
       <TestFramework>Mocha</TestFramework>
     </Compile>
     <Compile Include="Tests\PumpTests.js">
+      <SubType>Code</SubType>
+      <TestFramework>Mocha</TestFramework>
+    </Compile>
+    <Compile Include="Tests\ScheduleTests.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>

@@ -34,19 +34,13 @@
                 <div class="mashSchedule">
                     Mash Schedule
                 </div>
-                <div class="additionsSchedule">
-                    Additions Schedule
-                </div>
-                <div class="graph">
-                    Graph
-                </div>
             </div>
         </div>
         <div id="rhs" class="rhs">
-            <div class="step minus2">
+            <div class="step minus2" ng-click="goToStep(stepsViewport[0].name);">
                 {{stepsViewport[0].name}}
             </div>
-            <div class="step minus1">
+            <div class="step minus1" ng-click="goToStep(stepsViewport[1].name);">
                 {{stepsViewport[1].name}}
             </div>
             <div class="step currentStep">
@@ -67,18 +61,19 @@
                         <span>{{currentStep.name}}</span>
                     </div>
                     <div ng-show="currentStep.type == 'Chill'">
-                        <span>{{currentStep.name}}</span>
+                        <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />
+                        <span>{{currentStepTimer | date: 'mm:ss' }}</span>
                     </div>
                     <div ng-show="currentStep.type == 'Settle'">
                         <span>{{currentStep.name}}</span>
                     </div>
                 </div>
             </div>
-            <div class="step plus1">
+            <div class="step plus1" ng-click="goToStep(stepsViewport[3].name);";>
                 {{stepsViewport[3].name}}
 
             </div>
-            <div class="step plus2">
+            <div class="step plus2" ng-click="goToStep(stepsViewport[4].name);">
                 {{stepsViewport[4].name}}
             </div>
         </div>

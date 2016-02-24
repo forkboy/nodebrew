@@ -14,7 +14,6 @@
     "gpio": "^0.2.7",
     "liquid-pid": "^1.0.0",
     "mocha": "^2.4.5",
-    "mockery": "^1.4.0",
     "pi-blaster.js": "^0.1.1",
     "postal": "^1.0.8",
     "sinon": "^1.17.3",

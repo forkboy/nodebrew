@@ -50,7 +50,15 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
             $scope.currentStep = data.currentStep;
             $scope.$apply();
         });
+        
+        $scope.goToStep = function (name) {
+            if (name === undefined)
+                return;
 
+            if (confirm('Move to step ' + name + '?')) {
+                comms.send({ type: 'MoveToNamedStep', name: name });
+            }
+        }
         this.start();
 
     }]);

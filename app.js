@@ -6,6 +6,7 @@ var Pump             = require('./lib/pump.js');
 var Workflow         = require('./lib/workflow.js');
 var MessageRelay     = require('./lib/messageRelay.js');
 var Simulator        = require('./lib/simulator.js');
+var Schedule         = require('./lib/schedule.js');
 var Postal           = require("postal");
 var sinon            = require('sinon');
 
@@ -22,21 +23,13 @@ relay.start();
 // start the workflow
 var workflow = new Workflow.Workflow();
 
-// if we're in simulation mode, stub out all the hardware (thanks sinon)
-if (process.argv[2] == "simulate") {
-    var sim = new Simulator(workflow);
-    sim.initialise();
-}
+workflow.initialise(function () {
     
-workflow.start();
-
-
-
-//var x = true;
-//setInterval(function () {
-//    x = !x;
-//    if (x)
-//        p.on();
-//    else
-//        p.off();
-//}, 500);
+    // if we're in simulation mode, stub out all the hardware (thanks sinon)
+    if (process.argv[2] == "simulate") {
+        var sim = new Simulator(workflow);
+        sim.initialise();
+    }
+        
+    workflow.start();
+});
