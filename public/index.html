@@ -7,6 +7,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link href="css/site.css" rel="stylesheet" />
     <link href="font/css/font-awesome.min.css" rel="stylesheet" />
+
 </head>
 <body ng-app="nodebrew">
 
@@ -32,7 +33,33 @@
         <div id="body" class="body">
             <div class="bodyContent">
                 <div class="mashSchedule">
-                    Mash Schedule
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Step</td>
+                                <td>Temperature</td>
+                                <td>Duration (min)</td>
+                                <td>On</td>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="mashStep in mashSchedule">
+                            <tr ng-class="{ disabledMashStep: mashStep.enabled == false }">
+                                <td><span>{{mashStep.name}}</span></td>
+                                <td>
+                                    <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target"/>
+                                    <div class="value">{{mashStep.target}}</div>
+                                </td>
+                                <td>
+                                    <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
+                                    <div class="value">{{mashStep.duration}}</div>
+                                </td>
+                                <td>
+                                    <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="button" class="confirmManual" value="Save" ng-click="updateSchedule"/>
                 </div>
             </div>
         </div>

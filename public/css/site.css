@@ -1,24 +1,27 @@
 ﻿div {
     padding: 0px;
 }
+
 body {
-    width: 800px;
-    height: 480px;
+    width: 780px;
+    height: 400px;
     font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
     font-weight: 400;
 }
 
 .header {
-    width: 800px;
+    width: 780px;
     height: 100px;
 }
 
 .body {
-    width: 600px;
+    width: 565px;
     height: 380px;
     float: left;
     overflow-x: hidden;
     background-color: white;
+    margin: 10px;
 }
 
 .bodyContent {
@@ -27,14 +30,14 @@ body {
 }
 
 .rhs {
-    width: 200px;
+    width: 195px;
     height: 100%;
-    float:right;
-    overflow-y:hidden;
+    float: right;
+    overflow-y: hidden;
 }
 
 .header .block {
-    width: 180px;
+    width: 175px;
     height: 80px;
     float: right;
     color: white;
@@ -47,35 +50,35 @@ body {
     height: 50px;
     text-align: center;
     vertical-align: middle;
-    line-height: 50px;       /* the same as your div height */
+    line-height: 50px; /* the same as your div height */
     float: right;
 }
 
 .blockLabel {
-    background:rgba(0,0,0,.1) ;
+    background: rgba(0,0,0,.1);
     font-size: 12px;
     width: 40%;
     height: 30px;
     text-align: center;
     vertical-align: middle;
-    line-height: 30px;       /* the same as your div height */
+    line-height: 30px; /* the same as your div height */
     float: left;
 }
 
 .green {
-    background: #43B5AD 
+    background: #43B5AD;
 }
 
 .blue {
-    background: #578EBE 
+    background: #578EBE;
 }
 
 .yellow {
-    background: #DEB948
+    background: #DEB948;
 }
 
 .purple {
-    background: #8674A6
+    background: #8674A6;
 }
 
 .heat .off {
@@ -94,7 +97,7 @@ body {
     color: maroon;
 }
 
-.heat span>span {
+.heat span > span {
     font-size: 20px;
     vertical-align: central;
     line-height: 35px;
@@ -104,32 +107,22 @@ body {
 }
 
 .step {
-    height: 20px;
+    height: 25px;
     margin: 10px;
     background-color: #eeeeee;
     line-height: 20px;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
 }
 
 .currentStep {
     /*background-color: #43B5AD;*/
     background-color: #BBBBBB;
-    text-align:center;
-    height: 100px;
-}
-
-.stepLHS {
-    font-size: 22px;
     text-align: center;
-    vertical-align: top;
-    width: 30%;
     height: 80px;
-    float:left;
 }
 
-.stepBody
-{
+.stepBody {
     font-size: 22px;
     width: 70%;
     height: 100%;
@@ -137,14 +130,57 @@ body {
 }
 
 .mashSchedule, .additionsSchedule, .graph {
-    width: 640px;
+    width: 100%;
     height: 100%;
-    float:right;
+    float: left;
 }
 
-.confirmManual{
+.mashSchedule > table {
+    border-spacing: 5px;
     width: 100%;
-    height: 60px;
+    background-color: beige;
+}
+
+tr.disabledMashStep {
+    color: lightgrey;
+}
+
+.mashSchedule > table input[type=range] {
+    width: 160px;
+}
+
+input[type=checkbox]{
+  /* All browsers except webkit*/
+transform: scale(1.7);
+/* Webkit browsers*/
+-webkit-transform: scale(1.7);
+}
+
+*/ input[type='checkbox']:checked {
+    background: #abd;
+}
+
+div.value {
+    width: 30px;
+    float: left;
+}
+
+div.plus {
+    padding-left: 10px;
+}
+
+.mashSchedule > table > thead > tr {
+    font-weight: 600;
+    border-bottom: 4px solid black;
+}
+
+.mashSchedule > table tr {
+    height: 40px;
+}
+
+.confirmManual {
+    width: 100%;
+    height: 40px;
     display: inline-block;
     padding: 6px 12px;
     background-color: #578EBE;
@@ -178,6 +214,6 @@ body {
 
 
 .btn-primary {
-  background-color: #578EBE;
-  border-color: #578EBE;
+    background-color: #578EBE;
+    border-color: #578EBE;
 }

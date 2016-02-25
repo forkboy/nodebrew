@@ -91,6 +91,7 @@
     <Folder Include="public\font\css\" />
     <Folder Include="public\font\fonts\" />
     <Folder Include="public\img\" />
+    <Folder Include="public\fx\" />
     <Folder Include="Tests\" />
     <Folder Include="public\" />
     <Folder Include="public\js\" />

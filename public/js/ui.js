@@ -46,8 +46,31 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
 
         $scope.$on("Configuration", function (event, data) {
             console.log("Got configuration data from server");
-            $scope.steps = data.steps;
-            $scope.currentStep = data.currentStep;
+            $scope.steps        = data.steps;
+            $scope.currentStep  = data.currentStep;
+            $scope.mashSchedule = data.mashSchedule;
+            
+            // Setup some range values
+            $scope.mashSchedule.forEach(function (item) {
+                switch (item.name) {
+                    case "Protien":
+                        item.ranges = { ld: 0,  ud: 30, lt: 45, ut: 55 };
+                        break;
+                    case "Sacc 1":
+                        item.ranges = { ld: 0,  ud: 30, lt: 60, ut: 70 };
+                        break;
+                    case "Sacc 2":
+                        item.ranges = { ld: 30, ud: 60, lt: 60, ut: 70 };
+                        break;
+                    case "Sacc 3":
+                        item.ranges = { ld: 0,  ud: 30, lt: 60, ut: 70 };
+                        break;
+                    case "Mashout":
+                        item.ranges = { ld: 0,  ud: 30, lt: 70, ut: 80 };
+                        break;
+                }
+            })
+
             $scope.$apply();
         });
         
