@@ -78,39 +78,65 @@ describe('Schedule Maintenance;', function () {
 });
 
 describe('Schedule Storage;', function () {
+    
     it('Given a schedule is configured, when I save, then the configuration should be saved', function () {
         var s = minimalSchedule()
         
-        var stub = sinon.stub(fs, "writeFile", function () { });
+        var stub = sinon.stub(fs, "writeFileSync", function () { });
         
-        s.save(function () {
-            expect(stub.called).to.equal(true);
-        });
+        s.save();
+        
+        expect(stub.called).to.equal(true);
+    });
+    
+    it('Given a schedule is created with no name, when I save, then the configuration should be saved to the default file', function () {
+        var s = minimalSchedule()
+        
+        var stub = sinon.stub(fs, "writeFileSync", function () { });
+        
+        s.save();
+
+        expect(stub.called).to.equal(true);
+        expect(stub.args[0][0]).to.equal("./data/default.json");
+
     });
 
     it('Given a schedule is saved, when I load, then the configuration should be loaded', function () {
         var s = minimalSchedule()
         
-        var stub = sinon.stub(fs, "readFile", function () { return JSON.stringify(minimalSchedule()); });
+        var stub = sinon.stub(fs, "readFileSync", function () { return JSON.stringify(minimalSchedule().schedule); });
         
-        s.load(function () {
-            expect(stub.called).to.equal(true);
-            expect(s.step("Sacc 1").target).to.equal(62);
-            expect(s.step("Sacc 1").duration).to.equal(10);
-        });
+        var result = s.load(function (r) { result = r; });
+        
+        expect(stub.called).to.equal(true);
+        expect(s.step("Sacc 1").target).to.equal(62);
+        expect(s.step("Sacc 1").duration).to.equal(10);
         
     });
 
     it('Given a schedule is not saved, when I load, then I should return false', function () {
         var s = minimalSchedule()
         
-        var stub = sinon.stub(fs, "readFile", function (path, callback) {
-            callback("File not found", null);
+        var stub = sinon.stub(fs, "readFileSync", function () {
+            throw "File not found";
         });
         
-        s.load(function (result) {
-            expect(stub.called).to.equal(true);
-            expect(result).to.equal(false);
+        var result = s.load();
+        
+        expect(stub.called).to.equal(true);
+        expect(result).to.equal(false);
+    });
+
+    it('Given a schedule is given a name, when I load, then I should use that name as the save file', function () {
+        var s = new Schedule("test");
+        
+        var stub = sinon.stub(fs, "readFileSync", function () {
+            throw "File not found";
         });
+        
+        var result = s.load();
+        
+        expect(stub.called).to.equal(true);
+        expect(stub.args[0][0]).to.equal("./data/test.json");
     });
 });

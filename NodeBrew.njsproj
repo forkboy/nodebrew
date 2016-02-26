@@ -70,6 +70,10 @@
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
+    <Content Include="data\default.json" />
+    <Content Include="data\dry.json" />
+    <Content Include="data\mid.json" />
+    <Content Include="data\sweet.json" />
     <Content Include="package.json" />
     <Content Include="public\css\site.css" />
     <Content Include="public\font\css\font-awesome.css" />
@@ -86,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\" />
+    <Folder Include="data\" />
     <Folder Include="public\css\" />
     <Folder Include="public\font\" />
     <Folder Include="public\font\css\" />

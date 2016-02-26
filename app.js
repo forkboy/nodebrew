@@ -23,13 +23,12 @@ relay.start();
 // start the workflow
 var workflow = new Workflow.Workflow();
 
-workflow.initialise(function () {
+workflow.initialise();
     
-    // if we're in simulation mode, stub out all the hardware (thanks sinon)
-    if (process.argv[2] == "simulate") {
-        var sim = new Simulator(workflow);
-        sim.initialise();
-    }
+// if we're in simulation mode, stub out all the hardware (thanks sinon)
+if (process.argv[2] == "simulate") {
+    var sim = new Simulator(workflow);
+    sim.initialise();
+}
         
-    workflow.start();
-});
+workflow.start();
