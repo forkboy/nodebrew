@@ -17,6 +17,11 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
         this.commsReady = function () {
             console.log('Requesting initial data');
             comms.send({ type: 'GetConfiguration' });
+
+            setInterval(function () {
+                console.log("GetEventLog");
+                comms.send({ type: 'GetEventLog' });
+            }, 5000)
         };
         
         $scope.updateSchedule = function () {
@@ -64,6 +69,39 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
             $scope.$apply();
         });
         
+        $scope.$on("EventLog", function (event, data) {
+            console.log("Got event log data from server");
+            
+            var temperature = [];
+            var target = [];
+            var lastTarget = 0;
+            data.events.forEach(function (item) {
+                temperature.push({
+                    date: item.Time / 60.0,
+                    value: item.KettleTemperature
+                })
+                target.push({
+                    date: item.Time / 60.0,
+                    value: item.KettleTarget == 0 ? lastTarget : item.KettleTarget
+                });
+                if (item.KettleTarget != 0)
+                    lastTarget = item.KettleTarget;
+            });
+            var graphData = [];
+            graphData.push(temperature, target);
+
+            MG.data_graphic({
+                title: "Event Log",
+                description: "",
+                data: graphData,
+                width: 565,
+                height: 370,
+                target: '#eventLog',
+            })
+
+            $scope.$apply();
+        });
+
         $scope.goToStep = function (name) {
             if (name === undefined)
                 return;

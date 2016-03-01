@@ -9,6 +9,7 @@ var Simulator        = require('./lib/simulator.js');
 var Schedule         = require('./lib/schedule.js');
 var Postal           = require("postal");
 var sinon            = require('sinon');
+var EventLog         = require('./lib/eventLog.js');
 
 // start the web server
 var app = express();
@@ -32,3 +33,8 @@ if (process.argv[2] == "simulate") {
 }
         
 workflow.start();
+
+// Start the logger
+var el = new EventLog();
+el.start();
+

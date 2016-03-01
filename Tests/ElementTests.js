@@ -1,6 +1,5 @@
 ﻿var assert    = require('assert'),
     sinon     = require('sinon'), 
-    should    = require('chai').should(),
     expect    = require('chai').expect,
     PIBlaster = require('pi-blaster.js'),
     Element   = require('../lib/element.js');

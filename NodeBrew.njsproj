@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="lib\element.js" />
+    <Compile Include="lib\eventLog.js" />
     <Compile Include="lib\messageRelay.js" />
     <Compile Include="lib\pump.js" />
     <Compile Include="lib\schedule.js" />
@@ -47,10 +48,16 @@
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
+    <Compile Include="public\fx\metricsgraphics.js" />
+    <Compile Include="public\fx\metricsgraphics.min.js" />
     <Compile Include="public\js\app.js" />
     <Compile Include="public\js\comms.js" />
     <Compile Include="public\js\ui.js" />
     <Compile Include="Tests\ElementTests.js">
+      <SubType>Code</SubType>
+      <TestFramework>Mocha</TestFramework>
+    </Compile>
+    <Compile Include="Tests\EventLogTests.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
@@ -84,6 +91,7 @@
     <Content Include="public\font\fonts\fontawesome-webfont.woff" />
     <Content Include="public\font\fonts\fontawesome-webfont.woff2" />
     <Content Include="public\font\fonts\FontAwesome.otf" />
+    <Content Include="public\fx\metricsgraphics.css" />
     <Content Include="public\index.html" />
     <Content Include="README.md" />
     <Content Include="Setting up the PI.txt" />
