@@ -48,8 +48,7 @@
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
-    <Compile Include="public\fx\metricsgraphics.js" />
-    <Compile Include="public\fx\metricsgraphics.min.js" />
+    <Compile Include="public\fx\sb-admin-2\js\sb-admin-2.js" />
     <Compile Include="public\js\app.js" />
     <Compile Include="public\js\comms.js" />
     <Compile Include="public\js\ui.js" />
@@ -91,7 +90,8 @@
     <Content Include="public\font\fonts\fontawesome-webfont.woff" />
     <Content Include="public\font\fonts\fontawesome-webfont.woff2" />
     <Content Include="public\font\fonts\FontAwesome.otf" />
-    <Content Include="public\fx\metricsgraphics.css" />
+    <Content Include="public\fx\sb-admin-2\css\sb-admin-2.css" />
+    <Content Include="public\fx\sb-admin-2\css\timeline.css" />
     <Content Include="public\index.html" />
     <Content Include="README.md" />
     <Content Include="Setting up the PI.txt" />
@@ -103,6 +103,9 @@
     <Folder Include="public\font\" />
     <Folder Include="public\font\css\" />
     <Folder Include="public\font\fonts\" />
+    <Folder Include="public\fx\sb-admin-2\" />
+    <Folder Include="public\fx\sb-admin-2\css\" />
+    <Folder Include="public\fx\sb-admin-2\js\" />
     <Folder Include="public\img\" />
     <Folder Include="public\fx\" />
     <Folder Include="Tests\" />

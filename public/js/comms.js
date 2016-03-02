@@ -24,7 +24,7 @@
                     $rootScope.$broadcast(json.type, json);
                     
                     console.log('received event ' + json.type);
-                    //console.log(json);
+                    console.log(json);
                 } catch (e) {
                     console.log('This doesn\'t look like a valid JSON: ', message.data);
                     return;

@@ -3,12 +3,15 @@
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
+}
+
+.container {
+  width: 768px;
+  max-width: none !important;
 }
 
 .bodyContainer {
-    width: 780px;
+    margin-top: 5px;
     height: 480px;
     overflow: hidden;
 }
@@ -45,160 +48,14 @@ body {
     height: 100%;
 }
 
-.rhs {
-    width: 195px;
-    height: 100%;
-    float: right;
-    overflow-y: hidden;
-}
-
-.header .block {
-    width: 175px;
-    height: 80px;
-    float: right;
-    color: white;
-    margin: 10px;
-}
-
-.blockBody {
-    font-size: 35px;
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 50px; /* the same as your div height */
-    float: right;
-}
-
-.blockLabel {
-    background: rgba(0,0,0,.1);
-    font-size: 12px;
-    width: 40%;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 30px; /* the same as your div height */
-    float: left;
-}
-
-.green {
-    background: #43B5AD;
-}
-
-.darkgreen {
-    background: #269C93;
-}
-
-.blue {
-    background: #578EBE;
-}
-
-.lightblue {
-    background: #BEC9D3;
-}
-
-.yellow {
-    background: #DEB948;
-}
-
-.purple {
-    background: #8674A6;
-}
-
-.heat .off {
-    color: white;
-}
-
-.heat .on {
-    color: maroon;
-}
-
-.pump .off {
-    color: white;
-}
-
-.pump .on {
-    color: maroon;
-}
-
-.heat span > span {
-    font-size: 20px;
-    vertical-align: central;
-    line-height: 35px;
-}
-
-.steps {
-}
-
-.step {
-    height: 25px;
-    margin: 10px;
-    background-color: #eeeeee;
-    line-height: 25px;
-    padding: 10px;
-    text-align: center;
-    border: solid 1px darkgrey;
-}
-
-.currentStep {
-    /*background-color: #43B5AD;*/
-    background-color: #BBBBBB;
-    text-align: center;
-    height: 80px;
-    line-height: 15px;
-}
-
-.stepBody {
-    font-size: 22px;
-    width: 70%;
-    height: 100%;
-    float: left;
-}
-
-.mashSchedule, .additionsSchedule, .eventLog {
-    width: 100%;
-    height: 100%;
-    float: left;
-}
-
-.mashSchedule > table {
-    border-spacing: 5px;
-    width: 100%;
-}
-
-tr.disabledMashStep {
-    color: lightgrey;
-}
-
-.mashSchedule > table input[type=range] {
-    width: 160px;
-}
-
-.mashSchedule .actions {
-    margin-top: 15px;
-}
-
-.mashSchedule .presets {
-    width: 430px;
-    float:left;
-}
-
-.mashSchedule .presets input[type=button]{
-    width: 90px;
-}
-
-.mashSchedule .save {
-    float:right;
-}
-
 input[type=checkbox]{
   /* All browsers except webkit*/
-transform: scale(1.7);
+transform: scale(1.4);
 /* Webkit browsers*/
--webkit-transform: scale(1.7);
+-webkit-transform: scale(1.4);
 }
 
-*/ input[type='checkbox']:checked {
+input[type='checkbox']:checked {
     background: #abd;
 }
 
@@ -207,59 +64,42 @@ div.value {
     float: left;
 }
 
-div.plus {
-    padding-left: 10px;
-}
-
-.mashSchedule > table > thead > tr {
-    font-weight: 600;
-    border-bottom: 4px solid black;
-}
-
-.mashSchedule > table tr {
-    height: 40px;
-}
-
 .eventLog {
     width: 100%;
     height: 100%;
     float:left;
 }
 
-.button {
-    width: 120px;
-    height: 40px;
-    display: inline-block;
-    padding: 6px 12px;
-    border: 1px solid #a7a9aa;
-    font-size: 18px;
-    color: white;
+.mash-schedule input[type=range] {
+    width: 110px;
+    display: inline;
 }
 
-.btn {
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid #a7a9aa;
-    -webkit-border-radius: 0px !important;
-    border-radius: 0px !important;
-    color: #ffffff;
-    background-color: #a7a9aa;
-    border-color: #a7a9aa;
-    background-image: none;
-    filter: none;
-    text-shadow: none;
+.mash-schedule table>tbody>tr>td {
+    padding: 6px;
 }
 
+.mash-schedule table>tbody>tr.disabled {
+    color: lightgray;
+}
 
-.btn-primary {
-    background-color: #578EBE;
-    border-color: #578EBE;
+.mash-actions input[type=button] {
+    width: 70px;
+}
+
+.large {
+    font-size: 23px;
+}
+
+.table {
+    margin-bottom: 5px;
+}
+
+.steps a.current-step {
+    height: 111px;
+    background-color: #dff0d8;
+}
+
+.list-group {
+    margin-bottom: 7px;
 }

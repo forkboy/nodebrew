@@ -5,123 +5,324 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <link href="css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href="fx/sb-admin-2/css/sb-admin-2.css" rel="stylesheet" />
     <link href="font/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="fx/metricsgraphics.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
 </head>
 <body ng-app="nodebrew">
-    <div class="bodyContainer">
-        <div ng-controller="run">
-            <div id="header" class="header">
-                <div class="block blue temperature">
-                    <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
-                    <div class="blockLabel"><span>Current</span></div>
-                </div>
-                <div class="block green target">
-                    <div class="blockBody"><span>{{kettleTarget}}</span> <span>C</span></div>
-                    <div class="blockLabel"><span>Target</span></div>
-                </div>
-                <div class="block yellow pump">
-                    <div class="blockBody"><span ng-class="{on: kettlePump == true, off: kettlePump == false}" class="fa fa-random"></span></div>
-                    <div class="blockLabel"><span>Pump</span></div>
-                </div>
-                <div class="block purple heat">
-                    <div class="blockBody"><span ng-class="{on: kettleElement > 0, off: kettleElement == 0}" class="fa fa-fire"><span>{{kettleElement}}%</span></span></div>
-                    <div class="blockLabel"><span>Heat</span></div>
-                </div>
-            </div>
-            <div id="body" class="body">
-                <div class="bodyContent">
-                    <div class="eventLog" id="eventLog"></div>
-                    <div class="mashSchedule">
-                        <table class="table lightblue">
-                            <thead>
-                                <tr>
-                                    <td>Step</td>
-                                    <td>Temperature</td>
-                                    <td>Duration (min)</td>
-                                    <td>On</td>
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="mashStep in mashSchedule">
-                                <tr ng-class="{ disabledMashStep: mashStep.enabled == false }">
-                                    <td><span>{{mashStep.name}}</span></td>
-                                    <td>
-                                        <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
-                                        <div class="value">{{mashStep.target}}</div>
-                                    </td>
-                                    <td>
-                                        <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
-                                        <div class="value">{{mashStep.duration}}</div>
-                                    </td>
-                                    <td>
-                                        <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="actions">
-                            <div class="presets">
-                                <input type="button" ng-class="{green: presetName !== 'dry',     darkgreen: presetName === 'dry'}" class="button" value="Dry" ng-click="loadPreset('dry')" />
-                                <input type="button" ng-class="{green: presetName !== 'mid',     darkgreen: presetName === 'mid'}" class="button" value="Mid" ng-click="loadPreset('mid')" />
-                                <input type="button" ng-class="{green: presetName !== 'sweet',   darkgreen: presetName === 'sweet'}" class="button" value="Sweet" ng-click="loadPreset('sweet')" />
-                                <input type="button" ng-class="{green: presetName !== 'default', darkgreen: presetName === 'default'}" class="button" value="Custom" ng-click="loadPreset('default')" />
-                            </div>
-                            <div class="save">
-                                <input type="button" class="button blue" value="Save" ng-click="updateSchedule()" />
+    <div class="container" ng-controller="run">
+        <div class="bodyContainer">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-fire fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="large">
+                                        {{kettleElement}}%
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Kettle Element</span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-refresh fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="large">
+                                        <span ng-show="kettlePump == true"><i class="fa fa-check fa-1x"></i></span>
+                                        <span ng-show="kettlePump == false">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Kettle Pump</span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-line-chart fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="large">{{kettleTarget}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Kettle Target</span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-sun-o fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="large">{{kettleTemp}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Kettle Temperature</span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div id="rhs" class="rhs">
-                <div class="step minus2" ng-click="goToStep(stepsViewport[0].name);">
-                    {{stepsViewport[0].name}}
-                </div>
-                <div class="step minus1" ng-click="goToStep(stepsViewport[1].name);">
-                    {{stepsViewport[1].name}}
-                </div>
-                <div class="step currentStep">
-                    <div>
-                        <span>{{currentStep.name}}</span><br />
-                        <hr />
-                        <div ng-show="currentStep.type == 'Manual'">
-                            <input type="button" id="confirmManual" class="button green" value="OK" ng-click="confirmManualStep()" />
-                        </div>
-                        <div ng-show="currentStep.type == 'Ramp'">
-                            <span>{{kettleTarget}}</span>
-                        </div>
-                        <div ng-show="currentStep.type == 'Hold'">
-                            <span>{{currentStep.duration}} minutes</span><br /><br />
-                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
-                        </div>
-                        <div ng-show="currentStep.type == 'Boil'">
-                            <span>{{currentStep.name}}</span>
-                        </div>
-                        <div ng-show="currentStep.type == 'Chill'">
-                            <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />
-                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
-                        </div>
-                        <div ng-show="currentStep.type == 'Settle'">
-                            <span>{{currentStep.name}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="step plus1" ng-click="goToStep(stepsViewport[3].name);" ;>
-                    {{stepsViewport[3].name}}
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="" data-toggle="tab">Schedule</a>
+                                </li>
+                                <li>
+                                    <a href="#messages-pills" data-toggle="tab">Additions</a>
+                                </li>
+                                <li>
+                                    <a href="#settings-pills" data-toggle="tab">Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#profile-pills" data-toggle="tab">Graph</a>
+                                </li>
+                            </ul>
+                            <div class="mash-schedule">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Step</th>
+                                            <th>Temperature</th>
+                                            <th>Duration (min)</th>
+                                            <th>On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="mashStep in mashSchedule">
+                                        <tr ng-class="{ disabled: mashStep.enabled == false }">
+                                            <td><span>{{mashStep.name}}</span></td>
+                                            <td>
+                                                <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
+                                                <div class="value">{{mashStep.target}}</div>
+                                            </td>
+                                            <td>
+                                                <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
+                                                <div class="value">{{mashStep.duration}}</div>
+                                            </td>
+                                            <td>
+                                                <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
+                                <div class="col-xs-10 mash-actions">
+                                    <ul class="nav nav-pills">
+                                        <li ng-class="{active: presetName === 'dry'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('dry')">Dry</a></li>
+                                        <li ng-class="{active: presetName === 'mid'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('mid')">Mid</a></li>
+                                        <li ng-class="{active: presetName === 'sweet'  }"><a href="#" data-toggle="tab" ng-click="loadPreset('sweet')">Sweet</a></li>
+                                        <li ng-class="{active: presetName === 'default'}"><a href="#" data-toggle="tab" ng-click="loadPreset('default')">Custom</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-2 pull-right">
+                                    <input type="button" class="btn btn-primary" value="Save" ng-click="updateSchedule()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="step plus2" ng-click="goToStep(stepsViewport[4].name);">
-                    {{stepsViewport[4].name}}
+                <div class="col-xs-4 steps">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-beer fa-fw"></i> Steps
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group text-center">
+                                <a href="#" class="list-group-item" ng-click="goToStep(stepsViewport[0].name);"><i class="fa" ng-class="makeStepIcon(stepsViewport[0].type)"></i>&nbsp;&nbsp;{{stepsViewport[0].name}}</a> 
+                                <a href="#" class="list-group-item" ng-click="goToStep(stepsViewport[1].name);"><i class="fa" ng-class="makeStepIcon(stepsViewport[1].type)"></i>&nbsp;&nbsp;{{stepsViewport[1].name}}</a>
+                                
+                                <a href="#" class="list-group-item current-step">
+                                    <div>
+                                        <span ng-click="goToStep(currentStep.name);"><i class="fa fa-2x" ng-class="makeStepIcon(currentStep.type)"></i>&nbsp;&nbsp;{{currentStep.name}}</span><br />
+                                        <br />
+                                        <div ng-show="currentStep.type == 'Manual'">
+                                            <input type="button" id="confirmManual" class="btn btn-primary" value="OK" ng-click="confirmManualStep()" />
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Ramp'">
+                                            <span>{{kettleTarget}}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Hold'">
+                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span> / <span>{{currentStep.duration}} minutes</span>
+                                            
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Boil'">
+                                            <span>{{currentStep.name}}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Chill'">
+                                            <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />
+                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Settle'">
+                                            <span>{{currentStep.name}}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                    
+                                <a href="#" class="list-group-item" ng-click="goToStep(stepsViewport[3].name);"><i class="fa" ng-class="makeStepIcon(stepsViewport[3].type)"></i>&nbsp;&nbsp;{{stepsViewport[3].name}}</a>
+                                <a href="#" class="list-group-item" ng-click="goToStep(stepsViewport[4].name);"><i class="fa" ng-class="makeStepIcon(stepsViewport[4].type)"></i>&nbsp;&nbsp;{{stepsViewport[4].name}}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="js/app.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/comms.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
-    <script src="fx/metricsgraphics.min.js"></script>
+
+
+
+                <!--
+                    <div class="bodyContainer">
+                        <div ng-controller="run">
+                            <div id="header" class="header">
+                                <div class="block blue temperature">
+                                    <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
+                                    <div class="blockLabel"><span>Current</span></div>
+                                </div>
+                                <div class="block green target">
+                                    <div class="blockBody"><span>{{kettleTarget}}</span> <span>C</span></div>
+                                    <div class="blockLabel"><span>Target</span></div>
+                                </div>
+                                <div class="block yellow pump">
+                                    <div class="blockBody"><span ng-class="{on: kettlePump == true, off: kettlePump == false}" class="fa fa-random"></span></div>
+                                    <div class="blockLabel"><span>Pump</span></div>
+                                </div>
+                                <div class="block purple heat">
+                                    <div class="blockBody"><span ng-class="{on: kettleElement > 0, off: kettleElement == 0}" class="fa fa-fire"><span>{{kettleElement}}%</span></span></div>
+                                    <div class="blockLabel"><span>Heat</span></div>
+                                </div>
+                            </div>
+                            <div id="body" class="body">
+                                <div class="bodyContent">
+                                    <div class="eventLog" id="eventLog"></div>
+                                    <div class="mashSchedule">
+                                        <table class="table lightblue">
+                                            <thead>
+                                                <tr>
+                                                    <td>Step</td>
+                                                    <td>Temperature</td>
+                                                    <td>Duration (min)</td>
+                                                    <td>On</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="mashStep in mashSchedule">
+                                                <tr ng-class="{ disabledMashStep: mashStep.enabled == false }">
+                                                    <td><span>{{mashStep.name}}</span></td>
+                                                    <td>
+                                                        <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
+                                                        <div class="value">{{mashStep.target}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
+                                                        <div class="value">{{mashStep.duration}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="actions">
+                                            <div class="presets">
+                                                <input type="button" ng-class="{green: presetName !== 'dry',     darkgreen: presetName === 'dry'}" class="button" value="Dry" ng-click="loadPreset('dry')" />
+                                                <input type="button" ng-class="{green: presetName !== 'mid',     darkgreen: presetName === 'mid'}" class="button" value="Mid" ng-click="loadPreset('mid')" />
+                                                <input type="button" ng-class="{green: presetName !== 'sweet',   darkgreen: presetName === 'sweet'}" class="button" value="Sweet" ng-click="loadPreset('sweet')" />
+                                                <input type="button" ng-class="{green: presetName !== 'default', darkgreen: presetName === 'default'}" class="button" value="Custom" ng-click="loadPreset('default')" />
+                                            </div>
+                                            <div class="save">
+                                                <input type="button" class="button blue" value="Save" ng-click="updateSchedule()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="rhs" class="rhs">
+                                <div class="step minus2" ng-click="goToStep(stepsViewport[0].name);">
+                                    {{stepsViewport[0].name}}
+                                </div>
+                                <div class="step minus1" ng-click="goToStep(stepsViewport[1].name);">
+                                    {{stepsViewport[1].name}}
+                                </div>
+                                <div class="step currentStep">
+                                    <div>
+                                        <span>{{currentStep.name}}</span><br />
+                                        <hr />
+                                        <div ng-show="currentStep.type == 'Manual'">
+                                            <input type="button" id="confirmManual" class="button green" value="OK" ng-click="confirmManualStep()" />
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Ramp'">
+                                            <span>{{kettleTarget}}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Hold'">
+                                            <span>{{currentStep.duration}} minutes</span><br /><br />
+                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Boil'">
+                                            <span>{{currentStep.name}}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Chill'">
+                                            <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />
+                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
+                                        </div>
+                                        <div ng-show="currentStep.type == 'Settle'">
+                                            <span>{{currentStep.name}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step plus1" ng-click="goToStep(stepsViewport[3].name);" ;>
+                                    {{stepsViewport[3].name}}
+
+                                </div>
+                                <div class="step plus2" ng-click="goToStep(stepsViewport[4].name);">
+                                    {{stepsViewport[4].name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                <!--<script src="fx/sb-admin-2/js/sb-admin-2.js"></script>-->
+                <script src="js/app.js"></script>
+                <script src="js/ui.js"></script>
+                <script src="js/comms.js"></script>
 </body>
 </html>

@@ -72,32 +72,32 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
         $scope.$on("EventLog", function (event, data) {
             console.log("Got event log data from server");
             
-            var temperature = [];
-            var target = [];
-            var lastTarget = 0;
-            data.events.forEach(function (item) {
-                temperature.push({
-                    date: item.Time / 60.0,
-                    value: item.KettleTemperature
-                })
-                target.push({
-                    date: item.Time / 60.0,
-                    value: item.KettleTarget == 0 ? lastTarget : item.KettleTarget
-                });
-                if (item.KettleTarget != 0)
-                    lastTarget = item.KettleTarget;
-            });
-            var graphData = [];
-            graphData.push(temperature, target);
+            //var temperature = [];
+            //var target = [];
+            //var lastTarget = 0;
+            //data.events.forEach(function (item) {
+            //    temperature.push({
+            //        date: item.Time / 60.0,
+            //        value: item.KettleTemperature
+            //    })
+            //    target.push({
+            //        date: item.Time / 60.0,
+            //        value: item.KettleTarget == 0 ? lastTarget : item.KettleTarget
+            //    });
+            //    if (item.KettleTarget != 0)
+            //        lastTarget = item.KettleTarget;
+            //});
+            //var graphData = [];
+            //graphData.push(temperature, target);
 
-            MG.data_graphic({
-                title: "Event Log",
-                description: "",
-                data: graphData,
-                width: 565,
-                height: 370,
-                target: '#eventLog',
-            })
+            //MG.data_graphic({
+            //    title: "Event Log",
+            //    description: "",
+            //    data: graphData,
+            //    width: 565,
+            //    height: 370,
+            //    target: '#eventLog',
+            //})
 
             $scope.$apply();
         });
@@ -110,6 +110,19 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
                 comms.send({ type: 'MoveToNamedStep', name: name });
             }
         }
+        
+        $scope.makeStepIcon = function (type) {
+            switch (type) {
+                case "Hold":
+                    return "fa-clock-o";
+                case "Ramp":
+                    return "fa-bolt";
+                case "Manual":
+                    return "fa-hand-paper-o";
+            }
+
+        };
+
         this.start();
 
 }]);
