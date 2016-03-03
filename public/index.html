@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="fx/js/angular.min.js"></script>
+    <link rel="stylesheet" href="fx/css/bootstrap.min.css"/>
     <link href="fx/sb-admin-2/css/sb-admin-2.css" rel="stylesheet" />
     <link href="font/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
@@ -106,7 +106,7 @@
                         <div class="panel-body">
                             <ul class="nav nav-tabs">
                                 <li class="active">
-                                    <a href="" data-toggle="tab">Schedule</a>
+                                    <a href="#schedule" data-toggle="tab">Schedule</a>
                                 </li>
                                 <li>
                                     <a href="#messages-pills" data-toggle="tab">Additions</a>
@@ -115,47 +115,52 @@
                                     <a href="#settings-pills" data-toggle="tab">Settings</a>
                                 </li>
                                 <li>
-                                    <a href="#profile-pills" data-toggle="tab">Graph</a>
+                                    <a href="#graph" data-toggle="tab">Graph</a>
                                 </li>
                             </ul>
-                            <div class="mash-schedule">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Step</th>
-                                            <th>Temperature</th>
-                                            <th>Duration (min)</th>
-                                            <th>On</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody ng-repeat="mashStep in mashSchedule">
-                                        <tr ng-class="{ disabled: mashStep.enabled == false }">
-                                            <td><span>{{mashStep.name}}</span></td>
-                                            <td>
-                                                <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
-                                                <div class="value">{{mashStep.target}}</div>
-                                            </td>
-                                            <td>
-                                                <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
-                                                <div class="value">{{mashStep.duration}}</div>
-                                            </td>
-                                            <td>
-                                                <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="tab-content">
+                                <div id="schedule" class="tab-pane fade in active mash-schedule">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Step</th>
+                                                <th>Temperature</th>
+                                                <th>Duration (min)</th>
+                                                <th>On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="mashStep in mashSchedule">
+                                            <tr ng-class="{ disabled: mashStep.enabled == false }">
+                                                <td><span>{{mashStep.name}}</span></td>
+                                                <td>
+                                                    <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
+                                                    <div class="value">{{mashStep.target}}</div>
+                                                </td>
+                                                <td>
+                                                    <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
+                                                    <div class="value">{{mashStep.duration}}</div>
+                                                </td>
+                                                <td>
+                                                    <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                                <div class="col-xs-10 mash-actions">
-                                    <ul class="nav nav-pills">
-                                        <li ng-class="{active: presetName === 'dry'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('dry')">Dry</a></li>
-                                        <li ng-class="{active: presetName === 'mid'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('mid')">Mid</a></li>
-                                        <li ng-class="{active: presetName === 'sweet'  }"><a href="#" data-toggle="tab" ng-click="loadPreset('sweet')">Sweet</a></li>
-                                        <li ng-class="{active: presetName === 'default'}"><a href="#" data-toggle="tab" ng-click="loadPreset('default')">Custom</a></li>
-                                    </ul>
+                                    <div class="col-xs-10 mash-actions">
+                                        <ul class="nav nav-pills">
+                                            <li ng-class="{active: presetName === 'dry'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('dry')">Dry</a></li>
+                                            <li ng-class="{active: presetName === 'mid'    }"><a href="#" data-toggle="tab" ng-click="loadPreset('mid')">Mid</a></li>
+                                            <li ng-class="{active: presetName === 'sweet'  }"><a href="#" data-toggle="tab" ng-click="loadPreset('sweet')">Sweet</a></li>
+                                            <li ng-class="{active: presetName === 'default'}"><a href="#" data-toggle="tab" ng-click="loadPreset('default')">Custom</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-2 pull-right">
+                                        <input type="button" class="btn btn-primary" value="Save" ng-click="updateSchedule()" />
+                                    </div>
                                 </div>
-                                <div class="col-xs-2 pull-right">
-                                    <input type="button" class="btn btn-primary" value="Save" ng-click="updateSchedule()" />
+                                <div id="graph" class="tab-pane fade">
+                                    <div id="graph-content"></div>
                                 </div>
                             </div>
                         </div>
@@ -163,9 +168,6 @@
                 </div>
                 <div class="col-xs-4 steps">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-beer fa-fw"></i> Steps
-                        </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group text-center">
@@ -208,121 +210,11 @@
             </div>
         </div>
     </div>
-
-
-
-                <!--
-                    <div class="bodyContainer">
-                        <div ng-controller="run">
-                            <div id="header" class="header">
-                                <div class="block blue temperature">
-                                    <div class="blockBody"><span>{{kettleTemp}}</span> <span>C</span></div>
-                                    <div class="blockLabel"><span>Current</span></div>
-                                </div>
-                                <div class="block green target">
-                                    <div class="blockBody"><span>{{kettleTarget}}</span> <span>C</span></div>
-                                    <div class="blockLabel"><span>Target</span></div>
-                                </div>
-                                <div class="block yellow pump">
-                                    <div class="blockBody"><span ng-class="{on: kettlePump == true, off: kettlePump == false}" class="fa fa-random"></span></div>
-                                    <div class="blockLabel"><span>Pump</span></div>
-                                </div>
-                                <div class="block purple heat">
-                                    <div class="blockBody"><span ng-class="{on: kettleElement > 0, off: kettleElement == 0}" class="fa fa-fire"><span>{{kettleElement}}%</span></span></div>
-                                    <div class="blockLabel"><span>Heat</span></div>
-                                </div>
-                            </div>
-                            <div id="body" class="body">
-                                <div class="bodyContent">
-                                    <div class="eventLog" id="eventLog"></div>
-                                    <div class="mashSchedule">
-                                        <table class="table lightblue">
-                                            <thead>
-                                                <tr>
-                                                    <td>Step</td>
-                                                    <td>Temperature</td>
-                                                    <td>Duration (min)</td>
-                                                    <td>On</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-repeat="mashStep in mashSchedule">
-                                                <tr ng-class="{ disabledMashStep: mashStep.enabled == false }">
-                                                    <td><span>{{mashStep.name}}</span></td>
-                                                    <td>
-                                                        <input type="range" min="{{mashStep.ranges.lt}}" max="{{mashStep.ranges.ut}}" ng-model="mashStep.target" />
-                                                        <div class="value">{{mashStep.target}}</div>
-                                                    </td>
-                                                    <td>
-                                                        <input type="range" min="{{mashStep.ranges.ld}}" max="{{mashStep.ranges.ud}}" ng-model="mashStep.duration" />
-                                                        <div class="value">{{mashStep.duration}}</div>
-                                                    </td>
-                                                    <td>
-                                                        <input id="c{{$id}}" type="checkbox" ng-model="mashStep.enabled" class="css-checkbox" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="actions">
-                                            <div class="presets">
-                                                <input type="button" ng-class="{green: presetName !== 'dry',     darkgreen: presetName === 'dry'}" class="button" value="Dry" ng-click="loadPreset('dry')" />
-                                                <input type="button" ng-class="{green: presetName !== 'mid',     darkgreen: presetName === 'mid'}" class="button" value="Mid" ng-click="loadPreset('mid')" />
-                                                <input type="button" ng-class="{green: presetName !== 'sweet',   darkgreen: presetName === 'sweet'}" class="button" value="Sweet" ng-click="loadPreset('sweet')" />
-                                                <input type="button" ng-class="{green: presetName !== 'default', darkgreen: presetName === 'default'}" class="button" value="Custom" ng-click="loadPreset('default')" />
-                                            </div>
-                                            <div class="save">
-                                                <input type="button" class="button blue" value="Save" ng-click="updateSchedule()" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="rhs" class="rhs">
-                                <div class="step minus2" ng-click="goToStep(stepsViewport[0].name);">
-                                    {{stepsViewport[0].name}}
-                                </div>
-                                <div class="step minus1" ng-click="goToStep(stepsViewport[1].name);">
-                                    {{stepsViewport[1].name}}
-                                </div>
-                                <div class="step currentStep">
-                                    <div>
-                                        <span>{{currentStep.name}}</span><br />
-                                        <hr />
-                                        <div ng-show="currentStep.type == 'Manual'">
-                                            <input type="button" id="confirmManual" class="button green" value="OK" ng-click="confirmManualStep()" />
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Ramp'">
-                                            <span>{{kettleTarget}}</span>
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Hold'">
-                                            <span>{{currentStep.duration}} minutes</span><br /><br />
-                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Boil'">
-                                            <span>{{currentStep.name}}</span>
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Chill'">
-                                            <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />
-                                            <span>{{currentStepTimer | date: 'mm:ss' }}</span>
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Settle'">
-                                            <span>{{currentStep.name}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="step plus1" ng-click="goToStep(stepsViewport[3].name);" ;>
-                                    {{stepsViewport[3].name}}
-
-                                </div>
-                                <div class="step plus2" ng-click="goToStep(stepsViewport[4].name);">
-                                    {{stepsViewport[4].name}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-                <!--<script src="fx/sb-admin-2/js/sb-admin-2.js"></script>-->
-                <script src="js/app.js"></script>
-                <script src="js/ui.js"></script>
-                <script src="js/comms.js"></script>
+    <script src="fx/js/jquery-1.12.1.min.js"></script>
+    <script src="fx/js/jquery.flot.js"></script>
+    <script src="fx/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/comms.js"></script>
 </body>
 </html>

@@ -22,3 +22,7 @@ ls /sys/bus/w1/devices
 4. Install firefox (iceweasal)
 
 sudo apt-get iceweasal
+
+5. Follows steps to install PIBlaster
+
+https://github.com/sarfata/pi-blaster

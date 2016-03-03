@@ -10,6 +10,8 @@ var Schedule         = require('./lib/schedule.js');
 var Postal           = require("postal");
 var sinon            = require('sinon');
 var EventLog         = require('./lib/eventLog.js');
+var Element          = require('./lib/element.js');
+var TemperatureProbe = require('./lib/temperature.js');
 
 // start the web server
 var app = express();
@@ -37,4 +39,19 @@ workflow.start();
 // Start the logger
 var el = new EventLog();
 el.start();
+
+//var p = new Pump(27, "test");
+//var e = new Element(18, "kettle", new TemperatureProbe("kettle"), 0);
+//var x = true;
+//setInterval(function () {
+//    x = !x;
+//    if (x) {
+//        p.on();
+//        e.on();
+//    }
+//    else {
+//        p.off();
+//        e.off();
+//    }
+//}, 500);
 

@@ -64,12 +64,6 @@ div.value {
     float: left;
 }
 
-.eventLog {
-    width: 100%;
-    height: 100%;
-    float:left;
-}
-
 .mash-schedule input[type=range] {
     width: 110px;
     display: inline;
@@ -102,4 +96,10 @@ div.value {
 
 .list-group {
     margin-bottom: 7px;
+}
+
+#graph-content {
+    width:450px;
+    height:280px;
+    float:right;
 }

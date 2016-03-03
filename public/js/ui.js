@@ -18,10 +18,31 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
             console.log('Requesting initial data');
             comms.send({ type: 'GetConfiguration' });
 
+            this.plot = $.plot("#graph-content", [], {
+                series: {
+                    shadowSize: 0	// Drawing is faster without shadows
+                },
+                yaxis: {
+                    min: 0,
+                    max: 110,
+                    show: true
+                },
+                xaxis: {
+                    show: true
+                },
+                grid: {
+                    borderWidth: 0
+                },
+                legend: { position: "se" }
+            });
+            
+            // request the event log initially
+            comms.send({ type: 'GetEventLog' });
+
             setInterval(function () {
                 console.log("GetEventLog");
                 comms.send({ type: 'GetEventLog' });
-            }, 5000)
+            }, 30000);
         };
         
         $scope.updateSchedule = function () {
@@ -72,34 +93,21 @@ app.controller('run', ['$scope', 'comms', function ($scope, comms) {
         $scope.$on("EventLog", function (event, data) {
             console.log("Got event log data from server");
             
-            //var temperature = [];
-            //var target = [];
-            //var lastTarget = 0;
-            //data.events.forEach(function (item) {
-            //    temperature.push({
-            //        date: item.Time / 60.0,
-            //        value: item.KettleTemperature
-            //    })
-            //    target.push({
-            //        date: item.Time / 60.0,
-            //        value: item.KettleTarget == 0 ? lastTarget : item.KettleTarget
-            //    });
-            //    if (item.KettleTarget != 0)
-            //        lastTarget = item.KettleTarget;
-            //});
-            //var graphData = [];
-            //graphData.push(temperature, target);
+            var temperature = [];
+            var target = [];
+            var lastTarget = 0;
+            data.events.forEach(function (item) {
+                temperature.push([item.Time / 60.0, item.KettleTemperature]);
+                target.push([item.Time / 60.0, item.KettleTarget == 0 ? lastTarget : item.KettleTarget]);
 
-            //MG.data_graphic({
-            //    title: "Event Log",
-            //    description: "",
-            //    data: graphData,
-            //    width: 565,
-            //    height: 370,
-            //    target: '#eventLog',
-            //})
-
-            $scope.$apply();
+                if (item.KettleTarget != 0)
+                    lastTarget = item.KettleTarget;
+            });
+            var graphData = [];
+            
+            this.plot.setData([{ label: "Temperature", data: temperature }, { label: "Target", data: target }]);
+            plot.setupGrid();
+            this.plot.draw();
         });
 
         $scope.goToStep = function (name) {

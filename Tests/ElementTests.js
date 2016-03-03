@@ -16,8 +16,8 @@ describe('Element;', function () {
         e.on();
         
         sinon.assert.calledOnce(PIBlaster.setPwm);
-        assert.equal(100, e.getState())
-        assert.equal(100, PIBlaster.setPwm.getCall(0).args[1]);
+        assert.equal(1, e.getState())
+        assert.equal(1, PIBlaster.setPwm.getCall(0).args[1]);
     });
     
     it('Given element is in any state, when I turn the element Off, I should set Power to 0%', function () {
