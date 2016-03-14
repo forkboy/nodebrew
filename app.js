@@ -1,6 +1,7 @@
 ﻿
-var WebSocketServer  = require('websocket').server;
+//var io               = require('socket.io');
 var express          = require('express');
+var http             = require('http');
 var TemperatureProbe = require('./lib/temperature.js');
 var Pump             = require('./lib/pump.js');
 var Workflow         = require('./lib/workflow.js');
@@ -15,12 +16,23 @@ var TemperatureProbe = require('./lib/temperature.js');
 
 // start the web server
 var app = express();
-var server = app.listen(80);
-var wsServer = new WebSocketServer({ httpServer : server });
+app.set('port', 80);
 app.use(express.static(__dirname + '/public'));
+//app.listen(80);
+
+var io = require('socket.io').listen(app.listen(80));
+
+//var wsServer = new WebSocketServer({ httpServer : server });
+//var server = http.createServer(app);
+//io.listen(server);
+
+
+io.sockets.on('connection', function (socket) {
+    console.log("connected");
+});
 
 // start the message relay, which marshals messages between the client and server
-var relay = new MessageRelay.MessageRelay(wsServer);
+var relay = new MessageRelay.MessageRelay(io);
 relay.start();
 
 // start the workflow
@@ -40,18 +52,39 @@ workflow.start();
 var el = new EventLog();
 el.start();
 
-//var p = new Pump(27, "test");
-//var e = new Element(18, "kettle", new TemperatureProbe("kettle"), 0);
+//// Raw testing - temporary
+//var e1 = new Element(18, "kettle", new TemperatureProbe("kettle"), 0);
+//var e2 = new Element(23, "kettle", new TemperatureProbe("kettle"), 0);
+//var p1 = new Pump(24, "test");
+//var p2 = new Pump(25, "test");
+//var probe = new TemperatureProbe("kettle");
+//probe.start();
+//probe.getSensors(function () { });
+
+
+//e1.on();
+//e2.on();
+//p1.on();
+//p2.on();
+
+////var e = new Element(18, "kettle", new TemperatureProbe("kettle"), 0);
 //var x = true;
 //setInterval(function () {
 //    x = !x;
 //    if (x) {
-//        p.on();
-//        e.on();
+//        e1.on();
+//        e2.on();
+//        p1.on();
+//        p2.on();
+//        console.log(probe.getTemperature());
+//        //e.on();
 //    }
 //    else {
-//        p.off();
-//        e.off();
+//        e1.on();
+//        e2.on();
+//        p1.on();
+//        p2.on();
+//        //e.off();
 //    }
 //}, 500);
 

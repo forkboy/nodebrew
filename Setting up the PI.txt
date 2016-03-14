@@ -1,4 +1,16 @@
 ﻿
+PIN Setup
+=========
+
+4 I2C
+18 - Kettle Element
+23 - HLT Element
+24 - Kettle Pump
+25 - HLT Pump
+
+OS Setup
+========
+
 1. Install latest raspbain
 2. Install node.js
 
@@ -26,3 +38,25 @@ sudo apt-get iceweasal
 5. Follows steps to install PIBlaster
 
 https://github.com/sarfata/pi-blaster
+
+Edit pi-plaster.c and remove pins 24 and 25 from the array of GPIO to manage
+
+Useful Links
+============
+
+http://pinout.xyz/pinout/pin18_gpio24
+
+
+TODO: Configure Pi into Kiosk Mode:
+https://www.danpurdy.co.uk/web-development/raspberry-pi-kiosk-screen-tutorial/
+
+
+Run iceweasel in fullscreen:
+iceweasel -private -fullscreen -url  http://blah.blah.com
+or this might be useful: https://addons.mozilla.org/en-US/firefox/addon/r-kiosk/
+
+6. Update Startup scripts
+
+in /etc/rc.local add:
+sudo /home/pi/pi-blaster-master/pi-blaster
+sudo /usr/local/bin/node /home/pi/nodebrew/app.js &
