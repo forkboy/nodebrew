@@ -57,6 +57,21 @@ or this might be useful: https://addons.mozilla.org/en-US/firefox/addon/r-kiosk/
 
 6. Update Startup scripts
 
-in /etc/rc.local add:
+Start pi-blaster on startup
+sudo nano /etc/rc.local 
+and add:
 sudo /home/pi/pi-blaster-master/pi-blaster
-sudo /usr/local/bin/node /home/pi/nodebrew/app.js &
+
+Set nodebrew to run in crontab on startup
+
+> sudo crontab -e
+
+and add
+
+@reboot /usr/local/bin/node /home/pi/nodebrew/app.js &
+
+Set iceweasel to start when LXDE starts
+edit 
+/home/pi/.config/lxsession/LXDE-pi/autostart
+add
+@firefox http://localhost

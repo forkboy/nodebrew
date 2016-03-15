@@ -134,11 +134,15 @@ describe('Workflow Steps;', function () {
     it('Given I am at the last step, when I move next, then I should remain on the last step', function () {
         var w = new Workflow.Workflow();
         w.initialise();
-            
-        w.goToStep("Finish");
+        
+        // good idea to stub out the system shutdown step
+        var step = w.getStepNamed("Shutdown");
+        var stub = sinon.stub(step, "Start", function () { });
+        
+        w.goToStep("Shutdown");
         w.moveNext();
             
-        assert.equal(w.getCurrentStep().name, "Finish");
+        assert.equal(w.getCurrentStep().name, "Shutdown");
     });
     
     it('Given I am at any step, when a MoveToNextStep event is raised, I should move to the next step', function () {

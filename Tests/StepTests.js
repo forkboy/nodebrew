@@ -412,7 +412,7 @@ describe('Settle Step;', function () {
         assert.equal(spy.args[1][0], "SetWortPumpState");
         assert.equal(spy.args[1][1].state, "off");
     });
-
+    
     it('Given I am Started, when a Tick event is raised and current time meets or exceeds my wait time, I should raise MoveToNextStep event ', function () {
         var step = new Steps.Settle({ name: "Test", duration: 10 });
         
@@ -430,4 +430,21 @@ describe('Settle Step;', function () {
         assert.equal(spy.callCount, 2);
         assert.equal(spy.args[0][0], "MoveToNextStep");
     });
-})
+});
+
+describe('Shutdown Step;', function () {
+    it('Given I am initialised, then I should be of type Shutdown', function () {
+        var step = new Steps.Shutdown({ name: "Test" });
+        assert.equal(step.name, "Test");
+        assert.equal(step.type, "Shutdown");
+    });
+    
+    it('Given I am initialised, when I am started, I should shutdown the machine', function () {
+        var step = new Steps.Shutdown({ name: "Test" });
+        
+        var stub = sinon.stub(step, "Start", function () { });
+        
+        step.Start();
+        assert.equal(stub.callCount, 1);
+    });
+});

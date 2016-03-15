@@ -16,6 +16,7 @@
     "mocha": "^2.4.5",
     "pi-blaster.js": "^0.1.1",
     "postal": "^1.0.8",
+    "power-off": "^1.0.0",
     "sinon": "^1.17.3",
     "socket.io": "^1.4.5"
   }

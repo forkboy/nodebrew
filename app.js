@@ -13,6 +13,7 @@ var sinon            = require('sinon');
 var EventLog         = require('./lib/eventLog.js');
 var Element          = require('./lib/element.js');
 var TemperatureProbe = require('./lib/temperature.js');
+var powerOff         = require('power-off');
 
 // start the web server
 var app = express();

@@ -12,7 +12,7 @@ body {
 
 .bodyContainer {
     margin-top: 5px;
-    height: 480px;
+    height: 465px;
     overflow: hidden;
 }
 
@@ -100,6 +100,6 @@ div.value {
 
 #graph-content {
     width:450px;
-    height:280px;
+    height:270px;
     float:right;
 }
