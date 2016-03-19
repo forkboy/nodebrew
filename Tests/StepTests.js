@@ -251,7 +251,7 @@ describe('Boil Step;', function () {
         assert.equal(step.duration, 60);
     });
     
-    it('Given I am initialised, when I am Started, then I should set the kettle targetTemperature to maxium', function () {
+    it('Given I am initialised, when I am Started, then I should set the kettle targetTemperature to 80% power', function () {
         var step = new Steps.Boil({ name: "Test", duration: 60 });
         
         var messageBus = Postal.channel();
@@ -261,7 +261,8 @@ describe('Boil Step;', function () {
         step.Start();
         
         assert.equal(spy.args[0][0], "SetKettleTarget");
-        assert.equal(spy.args[0][1].target, 105);
+        assert.equal(spy.args[0][1].target, 0.8);
+        assert.equal(spy.args[0][1].type, "power");
     });
     
     it('Given I am initialised, when I am Started, then I should set the pump state to off', function () {

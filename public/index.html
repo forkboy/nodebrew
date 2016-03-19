@@ -184,12 +184,8 @@
                                         <div ng-show="currentStep.type == 'Ramp'">
                                             <span>{{kettleTarget}}</span>
                                         </div>
-                                        <div ng-show="currentStep.type == 'Hold'">
+                                        <div ng-show="currentStep.type == 'Hold' || currentStep.type == 'Boil'">
                                             <span>{{currentStepTimer | date: 'mm:ss' }}</span> / <span>{{currentStep.duration}} minutes</span>
-                                            
-                                        </div>
-                                        <div ng-show="currentStep.type == 'Boil'">
-                                            <span>{{currentStep.name}}</span>
                                         </div>
                                         <div ng-show="currentStep.type == 'Chill'">
                                             <span>{{currentStep.duration}} minutes or {{kettleTarget}} C</span><br /><br />

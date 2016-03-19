@@ -61,7 +61,11 @@ app.controller('run', ['$scope', '$timeout', 'comms', function ($scope, $timeout
         $scope.$on("Tick", function (event, data) {
             $scope.$apply(function () {
                 $scope.kettleTemp = parseFloat(data.KettleTemperature).toFixed(1);
-                $scope.kettleTarget = parseFloat(data.KettleTarget).toFixed(0);
+                if (data.KettleTarget.type === "power")
+                    $scope.kettleTarget = parseFloat(data.KettleTarget.target * 100).toFixed(0) + "%";
+                else
+                    $scope.kettleTarget = parseFloat(data.KettleTarget.target).toFixed(0) + "C";
+
                 $scope.kettleElement = parseFloat(data.KettleElement * 100.0).toFixed(0);
                 $scope.kettlePump = data.KettlePump;
                 $scope.currentStep = data.CurrentStep;
@@ -94,11 +98,14 @@ app.controller('run', ['$scope', '$timeout', 'comms', function ($scope, $timeout
             var target = [];
             var lastTarget = 0;
             data.events.forEach(function (item) {
-                temperature.push([item.Time / 60.0, item.KettleTemperature]);
-                target.push([item.Time / 60.0, item.KettleTarget == 0 ? lastTarget : item.KettleTarget]);
+                // if it's a power output type, assume the target is max (100C)
+                var kettleTarget = item.KettleTarget.type === "power" ? 100 : item.KettleTarget.target;
 
-                if (item.KettleTarget != 0)
-                    lastTarget = item.KettleTarget;
+                temperature.push([item.Time / 60.0, item.KettleTemperature]);
+                target.push([item.Time / 60.0, kettleTarget == 0 ? lastTarget : kettleTarget]);
+
+                if (kettleTarget != 0)
+                    lastTarget = kettleTarget;
             });
             var graphData = [];
             
@@ -123,6 +130,7 @@ app.controller('run', ['$scope', '$timeout', 'comms', function ($scope, $timeout
                 case "Hold":
                     return "fa-clock-o";
                 case "Ramp":
+                case "Boil":
                     return "fa-bolt";
                 case "Manual":
                     return "fa-hand-paper-o";

@@ -206,7 +206,7 @@ describe('Workflow Steps;', function () {
         assert.equal(spy.calledOnce, true, "pump.off() should be called");
     });
 
-    it('Given I am at any step, when a SetKettleTarget event is raised with state on, I should set the Kettle element target temperature', function () {
+    it('Given I am at any step, when a SetKettleTarget event is raised with a target set, I should set the Kettle element target temperature', function () {
         var w = new Workflow.Workflow();
         w.initialise();
                 
@@ -215,8 +215,21 @@ describe('Workflow Steps;', function () {
         var channel = Postal.channel();
         channel.publish("SetKettleTarget", { target: 55 });
             
-        assert.equal(spy.calledOnce, true, "pump.on() should be called");
-        assert.equal(spy.args[0][0], 55);
+        assert.equal(spy.calledOnce, true, "kettleElement.setTarget() should be called");
+        assert.equal(spy.args[0][0].target, 55);
+    });
+    
+    it('Given I am at any step, when a SetKettleTarget event is raised with a target type of power specified, I should set the Kettle element to the power output', function () {
+        var w = new Workflow.Workflow();
+        w.initialise();
+        
+        var spy = sinon.spy(w.kettleElement, "setPower");
+        
+        var channel = Postal.channel();
+        channel.publish("SetKettleTarget", { target: .8, type: 'power' });
+        
+        assert.equal(spy.calledOnce, true, "kettleElement.setPower() should be called");
+        assert.equal(spy.args[0][0], 0.8);
     });
 
     it('Given I am at any step, when a GetConfiguration event is raised, I should publish a Configuration message', function () {
