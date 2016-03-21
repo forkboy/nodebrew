@@ -75,3 +75,11 @@ edit
 /home/pi/.config/lxsession/LXDE-pi/autostart
 add
 @firefox http://localhost
+
+7. Disable screensaver and power-off
+
+install xscreensaver and disable it
+
+sudo apt-get install xscreensaver
+
+go to configuration and disable the screen saver and disable screen saver and power off

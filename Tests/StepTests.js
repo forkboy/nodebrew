@@ -26,7 +26,7 @@ describe('Manual Step;', function () {
         var step = new Steps.Manual({ name: "Test", target: 0, pump: "off" });
         
         step.Start();
-        var spy = sinon.spy(step.confirmSub, "unsubscribe");
+        var spy = sinon.spy(step.subscription, "unsubscribe");
         
         step.Stop();
                 
@@ -159,6 +159,16 @@ describe('Temp Ramp Step;', function () {
         assert.equal(spy.args[0][0], "MoveToNextStep");
     });
 
+    it('Given I am started, when I am stopped, then I should unsubscribe from events', function () {
+        var step = new Steps.TempRamp({ name: "Test", target: 50.1 });
+        
+        step.Start();
+        var spy = sinon.spy(step.subscription, "unsubscribe");
+        
+        step.Stop();
+        
+        assert.equal(spy.calledOnce, true);
+    });
 })
 
 describe('Temp Hold Step;', function () {
@@ -236,6 +246,17 @@ describe('Temp Hold Step;', function () {
         assert.equal(spy.callCount, 2, "publish('MoveToNext') should be called twice");
         assert.equal(spy.args[0][0], "MoveToNextStep");
     });
+
+    it('Given I am started, when I am stopped, then I should unsubscribe from events', function () {
+        var step = new Steps.TempHold({ name: "Test", target: 30.1, pump: "on", duration: 10 });
+        
+        step.Start();
+        var spy = sinon.spy(step.subscription, "unsubscribe");
+        
+        step.Stop();
+        
+        assert.equal(spy.calledOnce, true);
+    });
 })
 
 describe('Boil Step;', function () {
@@ -294,6 +315,17 @@ describe('Boil Step;', function () {
         
         assert.equal(spy.calledTwice, true);
         assert.equal(spy.args[0][0], "MoveToNextStep");
+    });
+
+    it('Given I am started, when I am stopped, then I should unsubscribe from events', function () {
+        var step = new Steps.Boil({ name: "Test", duration: 10 });
+        
+        step.Start();
+        var spy = sinon.spy(step.subscription, "unsubscribe");
+        
+        step.Stop();
+        
+        assert.equal(spy.calledOnce, true);
     });
 })
 
@@ -373,6 +405,17 @@ describe('Chill Step;', function () {
         assert.equal(spy.callCount, 2);
         assert.equal(spy.args[0][0], "MoveToNextStep");
     });
+
+    it('Given I am started, when I am stopped, then I should unsubscribe from events', function () {
+        var step = new Steps.Chill({ name: "Test", target: 20.1, duration: 10 });
+        
+        step.Start();
+        var spy = sinon.spy(step.subscription, "unsubscribe");
+        
+        step.Stop();
+        
+        assert.equal(spy.calledOnce, true);
+    });
 })
 
 describe('Settle Step;', function () {
@@ -430,6 +473,17 @@ describe('Settle Step;', function () {
         
         assert.equal(spy.callCount, 2);
         assert.equal(spy.args[0][0], "MoveToNextStep");
+    });
+
+    it('Given I am started, when I am stopped, then I should unsubscribe from events', function () {
+        var step = new Steps.Settle({ name: "Test", duration: 10 });
+        
+        step.Start();
+        var spy = sinon.spy(step.subscription, "unsubscribe");
+        
+        step.Stop();
+        
+        assert.equal(spy.calledOnce, true);
     });
 });
 
