@@ -16,8 +16,8 @@ describe('Element;', function () {
         e.on();
         
         sinon.assert.calledOnce(PIBlaster.setPwm);
-        assert.equal(1, e.getState())
-        assert.equal(1, PIBlaster.setPwm.getCall(0).args[1]);
+        expect(e.getState()).to.equal(1);
+        expect(PIBlaster.setPwm.getCall(0).args[1]).to.equal(1);
     });
     
     it('When I turn the element Off, I should set Power to 0%', function () {
@@ -28,8 +28,8 @@ describe('Element;', function () {
         e.off();
         
         sinon.assert.calledOnce(PIBlaster.setPwm);
-        assert.equal(0, e.getState())
-        assert.equal(0, PIBlaster.setPwm.getCall(0).args[1]);
+        expect(e.getState()).to.equal(0);
+        expect(PIBlaster.setPwm.getCall(0).args[1]).to.equal(0);
     });
     
     it('When I set the element to a specific Power, I should set Power to the rating', function () {
@@ -40,10 +40,10 @@ describe('Element;', function () {
         e.setTarget({ type: "power", target: 0.8 });
         
         sinon.assert.calledOnce(PIBlaster.setPwm);
-        assert.equal("power", e.getTarget().type)
-        assert.equal(0.8, e.getTarget().target)
-        assert.equal(0.8, e.getState())
-        assert.equal(0.8, PIBlaster.setPwm.getCall(0).args[1]);
+        expect(e.getTarget().type)                 .to.equal("power");
+        expect(e.getTarget().target)               .to.equal(0.8);
+        expect(e.getState())                       .to.equal(0.8);
+        expect(PIBlaster.setPwm.getCall(0).args[1]).to.equal(0.8);
     });
     
     it('Given element is set with a target temperature, when I getTarget, I should return target of type temperature', function () {
@@ -66,8 +66,8 @@ describe('Element;', function () {
         e.setPower(0.8);
         
         var target = e.getTarget();
-        expect(target.type).to.equal('power');
-        expect(target.target).to.equal(0.8);
+        expect(e.getTarget().type).to.equal("power");
+        expect(e.getTarget().target).to.equal(0.8);
     });
 
     it('When I set a target temperature, I should set the pid target', function () {
@@ -79,10 +79,10 @@ describe('Element;', function () {
         e.setTarget({ type: "temp", target: 50.5 });
         
         sinon.assert.calledOnce(e.pid.setPoint);
-        assert.equal(50.5, e.pid.setPoint.getCall(0).args[0]);
+        expect(e.pid.setPoint.getCall(0).args[0]).to.equal(50.5);
     });
 
-    it('When I set a target temperature or zero, I should set the bypass the pid and set the pin output to zero', function () {
+    it('When I set a target temperature to zero, I should set the bypass the pid and set the pin output to zero', function () {
         
         sinon.stub(PIBlaster, "setPwm", function () { return true; });
         
@@ -90,7 +90,21 @@ describe('Element;', function () {
         
         e.setTarget({ type: "temp", target: 0 });
         
-        assert.equal(0, PIBlaster.setPwm.getCall(0).args[1]);
+        expect(PIBlaster.setPwm.getCall(0).args[1]).to.equal(0);
+    });
+    
+    it('Given I have a target temperature, When I set a target temperature to zero, I should disable the pid timer', function () {
+        
+        sinon.stub(PIBlaster, "setPwm", function () { return true; });
+        
+        var e = new Element(17, "test");
+        e.setTarget({ type: "temp", target: 50 });
+        
+        assert.notEqual(e.timer, null);
+        
+        e.setTarget({ type: "temp", target: 0 });
+        
+        expect(e.timer).to.equal(null);
     });
 
     it('Given I have a target temperature, When I set a target power, I should disable the pid timer', function () {
@@ -102,6 +116,6 @@ describe('Element;', function () {
 
         e.setTarget({ type: "power", target: 0 });
         
-        assert.equal(e.timer, null);
+        expect(e.timer).to.equal(null);
     });
 });

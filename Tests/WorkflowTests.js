@@ -11,9 +11,9 @@ describe('Workflow Steps;', function () {
     it('Given an uninitialised workflow, whem I initialise, then I should be at Start', function () {
         var w = new Workflow.Workflow();
         w.initialise();
-                
-        assert.equal(w.getCurrentStep().name, "Start");
-        assert.equal(w.getCurrentStep().type, "Manual");
+        
+        expect(w.getCurrentStep().name).to.equal("Start");
+        expect(w.getCurrentStep().type).to.equal("Manual");
     });
     
     it('Given an uninitialised workflow, whem I initialise, then I should load the last schedule', function () {
@@ -41,8 +41,8 @@ describe('Workflow Steps;', function () {
         w.initialise();
         
         w.moveNext();
-            
-        assert.equal(w.getCurrentStep().name, "Add Mash Water");
+        
+        expect(w.getCurrentStep().name).to.equal("Add Mash Water");
     });
     
     it('Given I am at any step, when I move next and the next step is disabled, then I should be at the next enabled step', function () {
@@ -53,7 +53,7 @@ describe('Workflow Steps;', function () {
         
         w.moveNext();
         
-        assert.equal(w.getCurrentStep().name, "Ramp to Strike");
+        expect(w.getCurrentStep().name).to.equal("Ramp to Strike");
     });
     
     it('Given I am at any step, when I move next and all remaining steps are disabled, then I should not move', function () {
@@ -67,7 +67,7 @@ describe('Workflow Steps;', function () {
         
         w.moveNext();
         
-        assert.equal(w.getCurrentStep().name, "Start");
+        expect(w.getCurrentStep().name).to.equal("Start");
     });
 
     it('Given I am at the start, when I movePrevious then I should remain at Start', function () {
@@ -75,7 +75,8 @@ describe('Workflow Steps;', function () {
         w.initialise();
 
         w.movePrevious();
-        assert.equal(w.getCurrentStep().name, "Start");
+        
+        expect(w.getCurrentStep().name).to.equal("Start");
     });
     
     it('Given I am at any step that is not start, when I movePrevious then I should move to the previous step', function () {
@@ -85,7 +86,8 @@ describe('Workflow Steps;', function () {
         w.goToStep("Add Mash Water");
         
         w.movePrevious();
-        assert.equal(w.getCurrentStep().name, "Start");
+        
+        expect(w.getCurrentStep().name).to.equal("Start");
     });
     
     it('Given I am at any step that is not start, when I movePrevious and the previous step is disabled, then I should move previous step that is enabled', function () {
@@ -96,7 +98,8 @@ describe('Workflow Steps;', function () {
         w.getStepNamed("Add Mash Water").enabled = false;
         
         w.movePrevious();
-        assert.equal(w.getCurrentStep().name, "Start");
+        
+        expect(w.getCurrentStep().name).to.equal("Start");
     });
     
     it('Given I am at any step that is not start, when I movePrevious and all previous steps are disabled, then I stay where I am', function () {
@@ -108,7 +111,8 @@ describe('Workflow Steps;', function () {
         w.goToStep("Ramp to Strike");
                 
         w.movePrevious();
-        assert.equal(w.getCurrentStep().name, "Ramp to Strike");
+        
+        expect(w.getCurrentStep().name).to.equal("Ramp to Strike");
     });
 
     it('Given I at any step, when I go to step, then I should move to that step', function () {
@@ -116,8 +120,8 @@ describe('Workflow Steps;', function () {
         w.initialise();
         
         w.goToStep("Finish");
-            
-        assert.equal(w.getCurrentStep().name, "Finish");
+        
+        expect(w.getCurrentStep().name).to.equal("Finish");
     });
     
     it('Given I at any step, when I go to step, then I should move to the next enabled step', function () {
@@ -128,7 +132,7 @@ describe('Workflow Steps;', function () {
         w.getStepNamed("Start").enabled = false;
         w.goToStep("Start");
         
-        assert.equal(w.getCurrentStep().name, "Ramp to Strike");
+        expect(w.getCurrentStep().name).to.equal("Ramp to Strike");
     });
 
     it('Given I am at the last step, when I move next, then I should remain on the last step', function () {
@@ -142,7 +146,7 @@ describe('Workflow Steps;', function () {
         w.goToStep("Shutdown");
         w.moveNext();
             
-        assert.equal(w.getCurrentStep().name, "Shutdown");
+        expect(w.getCurrentStep().name).to.equal("Shutdown");
     });
     
     it('Given I am at any step, when a MoveToNextStep event is raised, I should move to the next step', function () {
@@ -167,7 +171,6 @@ describe('Workflow Steps;', function () {
         channel.publish("MoveToPreviousStep");
             
         expect(spy.calledOnce).to.equal(true);
-
     });
     
     it('Given I am at any step, when a MoveToNamedStep event is raised, I should move to the previous step', function () {
@@ -190,8 +193,8 @@ describe('Workflow Steps;', function () {
             
         var channel = Postal.channel();
         channel.publish("SetWortPumpState", { state: "on" });
-            
-        assert.equal(spy.calledOnce, true, "pump.on() should be called");
+        
+        expect(spy.calledOnce, "pump.on() should be called").to.equal(true);
     });
 
     it('Given I am at any step, when a SetWortPumpState event is raised with state off, I should set the Wort pump state to off', function () {
@@ -203,7 +206,7 @@ describe('Workflow Steps;', function () {
         var channel = Postal.channel();
         channel.publish("SetWortPumpState", { state: "off" });
             
-        assert.equal(spy.calledOnce, true, "pump.off() should be called");
+        expect(spy.calledOnce, "pump.off() should be called").to.equal(true);
     });
 
     it('Given I am at any step, when a SetKettleTarget event is raised with a target set, I should set the Kettle element target temperature', function () {
@@ -215,8 +218,8 @@ describe('Workflow Steps;', function () {
         var channel = Postal.channel();
         channel.publish("SetKettleTarget", { target: 55 });
             
-        assert.equal(spy.calledOnce, true, "kettleElement.setTarget() should be called");
-        assert.equal(spy.args[0][0].target, 55);
+        expect(spy.calledOnce, "kettleElement.setTarget() should be called").to.equal(true);
+        expect(spy.args[0][0].target).to.equal(55);
     });
     
     it('Given I am at any step, when a SetKettleTarget event is raised with a target type of power specified, I should set the Kettle element to the power output', function () {
@@ -228,8 +231,8 @@ describe('Workflow Steps;', function () {
         var channel = Postal.channel();
         channel.publish("SetKettleTarget", { target: .8, type: 'power' });
         
-        assert.equal(spy.calledOnce, true, "kettleElement.setPower() should be called");
-        assert.equal(spy.args[0][0], 0.8);
+        expect(spy.calledOnce, "kettleElement.setPower() should be called").to.equal(true);
+        expect(spy.args[0][0]).to.equal(0.8);
     });
 
     it('Given I am at any step, when a GetConfiguration event is raised, I should publish a Configuration message', function () {
